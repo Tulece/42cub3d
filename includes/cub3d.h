@@ -41,6 +41,11 @@ typedef struct s_data
 	t_map			map;
 }				t_data;
 
+// keybinding.c
+int	hook_switch(int keycode, t_data *data);
+
+// exit.c
+int	quit(t_data *data);
 int	cross_quit(t_data *data);
 
 #endif
