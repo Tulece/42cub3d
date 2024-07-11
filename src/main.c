@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 		return (1);
 	// data.map.map_path = av[1];
 	// textures and datas init here
-	data.win = mlx_new_window(data.mlx, 300, 200, "cub3D");
+	data.win = mlx_new_window(data.mlx, 1080, 720, "cub3D");
 	if (!data.win)
 		return (1);
 	mlx_key_hook(data.win, hook_switch, &data);
