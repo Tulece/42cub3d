@@ -23,26 +23,43 @@ void update_player_position(t_data *data, double delta_x, double delta_y)
 		data->player.y = new_y;
 }
 
-void	draw_player(t_data *data)
+void draw_tile(t_data *data, int x, int y, int color)
 {
-	mlx_pixel_put(data->mlx, data->win, (int)data->player.x, (int)data->player.y, 0xFF0000);
-}
+	int pixel_x;
+	int pixel_y;
+	int i;
+	int j;
 
-void	draw_map(t_data *data)
-{
-	int	x;
-	int	y;
+	pixel_x = x * TILE_SIZE;
+	pixel_y = y * TILE_SIZE;
 
-	y = -1;
-	while (++y < data->map.map_dim.y)
+	for (i = 0; i < TILE_SIZE; i++)
 	{
-		x = -1;
-		while (++x < data->map.map_dim.x)
+		for (j = 0; j < TILE_SIZE; j++)
 		{
-			if (data->map.map[y][x] == '1')
-				mlx_pixel_put(data->mlx, data->win, x * TILE_SIZE, y * TILE_SIZE, 0xFFFFFF); // Dessine les murs en blanc
-			else
-				mlx_pixel_put(data->mlx, data->win, x * TILE_SIZE, y * TILE_SIZE, 0x000000); // Dessine le sol en noir
+			mlx_pixel_put(data->mlx, data->win, pixel_x + j, pixel_y + i, color);
 		}
 	}
+}
+
+void draw_map(t_data *data)
+{
+	int x;
+	int y;
+
+	for (y = 0; y < data->map.map_dim.y; y++)
+	{
+		for (x = 0; x < data->map.map_dim.x; x++)
+		{
+			if (data->map.map[y][x] == '1')
+				draw_tile(data, x, y, 0xFFFFFF); // Blanc pour les murs
+			else if (data->map.map[y][x] == '0' || data->map.map[y][x] == 'N')
+				draw_tile(data, x, y, 0x000000); // Noir pour le sol et point de départ du joueur
+		}
+	}
+}
+
+void draw_player(t_data *data)
+{
+	mlx_pixel_put(data->mlx, data->win, (int)data->player.x, (int)data->player.y, 0xFF0000); // Rouge pour le joueur
 }
