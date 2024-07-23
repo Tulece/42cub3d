@@ -1,0 +1,2 @@
+La formule du raycasting est la suivante :
+( indice de la colonne / largeur de l'écran ) * 2 - 1.

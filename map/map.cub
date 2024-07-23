@@ -1,0 +1,11 @@
+//SO ./south_texture
+//NO ./north_texture
+//EA ./east_texture
+//WE ./west_texture
+
+F couleur rgb sol
+C couleur rgb plafond
+
+1111111111111
+100N000000011
+1111111111111

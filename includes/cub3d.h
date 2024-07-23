@@ -11,6 +11,7 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
 # include "../minilibx-linux/mlx.h"
+# include "structs.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -29,17 +30,52 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 
-typedef struct s_map
-{
-	char	*map_path;
-}			t_map;
+# define TILE_SIZE 8
 
-typedef struct s_data
-{
-	void			*mlx;
-	void			*win;
-	t_map			map;
-}				t_data;
+// Initialisation
+void init_data(t_data *data);
+void init_textures(t_data *data);
+void	init_map(t_data *data);
+void init_colors(t_data *data);
+
+// Keybinding
+int handle_keypress(int keycode, t_data *data);
+int handle_keyrelease(int keycode, t_data *data);
+
+// img
+void	update_player_position(t_data *data, double delta_x, double delta_y);
+void	draw_player(t_data *data);
+void	draw_map(t_data *data);
+
+
+// Parsing
+void parse_map(t_data *data, const char *map_path);
+
+// Raycasting
+void perform_raycasting(t_data *data);
+
+// Events
+int handle_keypress(int keycode, t_data *data);
+int handle_keyrelease(int keycode, t_data *data);
+int handle_exit(t_data *data);
+
+// Rendering
+int	render_frame(t_data *data);
+
+// Utils
+int is_walkable(char **map, int x, int y);
+void error_exit(const char *message, t_data *data);
+
+// Cleanup
+void cleanup(t_data *data);
+
+
+
+
+
+
+
+
 
 // keybinding.c
 int	hook_switch(int keycode, t_data *data);
