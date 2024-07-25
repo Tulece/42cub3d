@@ -145,7 +145,7 @@ void init_map(t_data *data)
 	lines = ft_split(file_content, '\n');
 	free(file_content);
 	map_start_index = parse_texture_paths(data, lines);
-	data->map.map = ft_split(lines[map_start_index], '\n');
+	data->map.map = &lines[map_start_index];
 	printf("NO = %s\nSO = %s\nWE = %s\nEA = %s\n", data->texture.no_texture.path, data->texture.so_texture.path, data->texture.we_texture.path, data->texture.ea_texture.path);
 	if (!validate_map(data->map.map))
 	{

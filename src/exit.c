@@ -14,8 +14,8 @@ void free_map(char **map)
 
 int	quit(t_data *data)
 {
-	if (data->map.map)
-		free_map(data->map.map);
+	// if (data->map.map)
+		// free_map(data->map.map);
 	if (data->mlx && data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)
