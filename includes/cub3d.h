@@ -4,8 +4,18 @@
 # ifdef __linux__
 #  include <X11/keysym.h>
 #  include <X11/X.h>
+#  define KEY_Z 122
+#  define KEY_Q 113
+#  define KEY_S 115
+#  define KEY_D 100
+#  define ESC 65307
 # elif __APPLE__
 #  include <ApplicationServices/ApplicationServices.h>
+#  define KEY_W 119
+#  define KEY_A 97
+#  define KEY_S 115
+#  define KEY_D 100
+#  define KEY_ESC 65307
 # endif
 
 # include "../libft/includes/libft.h"
@@ -18,12 +28,6 @@
 # include <unistd.h>
 # include <errno.h>
 # include <math.h>
-
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_ESC 65307
 
 # define KEY_UP 65362
 # define KEY_DOWN 65364
