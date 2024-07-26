@@ -161,9 +161,6 @@ void init_map(t_data *data)
 	printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);
 	i = -1;
-	while (++i < map_start_index)
-		free(lines[i]);
-	free(lines);
 }
 
 // void	display_map(t_data *data, t_axes i)

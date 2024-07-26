@@ -31,7 +31,15 @@ void draw_tile(t_data *data, int x, int y, int color)
 {
 	int pixel_x = x * TILE_SIZE;
 	int pixel_y = y * TILE_SIZE;
-	mlx_pixel_put(data->mlx, data->win, pixel_x, pixel_y, color);
+	for (int i = 0; i < TILE_SIZE; i++)
+	{
+		for (int j = 0; j < TILE_SIZE; j++)
+		{
+			mlx_pixel_put(data->mlx, data->win, pixel_x + j, pixel_y + i, color);
+		}
+		
+	}
+	
 }
 
 void draw_map(t_data *data)
@@ -55,5 +63,5 @@ void draw_player(t_data *data)
 {
 	int player_pixel_x = (int)(data->player.x);
 	int player_pixel_y = (int)(data->player.y);
-	mlx_pixel_put(data->mlx, data->win, player_pixel_x, player_pixel_y, 0xFF0000); // Rouge pour le joueur
+	draw_tile(data, player_pixel_y, player_pixel_x, 0xFF0000);
 }
