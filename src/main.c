@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		error_exit("Usage: ./cub3D <map.cub>", NULL);
 	init_data(&data);
-	data.map.map_path = argv[1];
+	data.map.map_path = ft_strdup(argv[1]);
 	init_map(&data);
 	// init_textures(&data);
 	// init_colors(&data);

@@ -7,6 +7,7 @@ int	get_file_size(t_data *data)
 	char	c;
 
 	fd = open(data->map.map_path, O_RDONLY);
+		printf("%s\n", data->map.map_path);
 	if (fd == -1)
 	{
 		ft_printf("An error occured while opening the map.\n");
@@ -145,7 +146,7 @@ void	set_deg_dir(t_data *data, char dir)
 		i = 180.0;
 	if (dir == 'W')
 		i = 270.0;
-	data->player.deg_dir = i; 
+	data->player.deg_dir = i;
 }
 
 void	locate_player(t_data *data)
