@@ -7,7 +7,8 @@ int main(int argc, char **argv)
 	if (argc != 2)
 		error_exit("Usage: ./cub3D <map.cub>", NULL);
 	init_data(&data);
-	data.map.map_path = argv[1];
+	data.map.map_path = ft_strdup(argv[1]);
+	ft_printf("path = %s\n",data.map.map_path);
 	init_map(&data);
 	// init_textures(&data);
 	// init_colors(&data);
@@ -15,7 +16,7 @@ int main(int argc, char **argv)
 	mlx_hook(data.win, 3, 1L<<1, handle_keyrelease, &data);
 	mlx_hook(data.win, 17, 0, cross_quit, &data);
 	mlx_loop_hook(data.mlx, render_frame, &data);
-	mlx_do_key_autorepeatoff(data.mlx);
+	mlx_do_key_autorepeaton(data.mlx);
 	mlx_loop(data.mlx);
 	// cleanup(&data);
 	return (0);

@@ -8,13 +8,12 @@ void init_data(t_data *data)
 	data->win = mlx_new_window(data->mlx, 800, 600, "Cub3D");
 	if (!data->win)
 		error_exit("Failed to create window", data);
-	data->player.x = 1.5 * TILE_SIZE; // Par exemple, initialiser au centre d'une case
-	data->player.y = 1.5 * TILE_SIZE; // Par exemple, initialiser au centre d'une case
 	data->player.dir_x = -1;
 	data->player.dir_y = 0;
 	data->player.plane_x = 0;
 	data->player.plane_y = 0.66;
-	data->player.speed = 1.0; // Vitesse du joueur en pixels
+	data->player.speed = 0.2; // Vitesse du joueur en pixels
+	data->player.pov_speed = 3.0;
 }
 
 // void init_textures(t_data *data)
