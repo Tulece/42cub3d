@@ -5,8 +5,8 @@ int is_collision(t_data *data, double x, double y)
 	int map_x;
 	int map_y;
 
-	map_x = (int)(x / TILE_SIZE);
-	map_y = (int)(y / TILE_SIZE);
+	map_x = (int)(x);
+	map_y = (int)(y);
 
 	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
 		return 1; // Treat out-of-bounds as a collision
