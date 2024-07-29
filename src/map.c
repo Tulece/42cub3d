@@ -134,6 +134,45 @@ int validate_map(char **map)
 	return (1);
 }
 
+void	set_deg_dir(t_data *data, char dir)
+{
+	double	i;
+
+	i = 0.0;
+	if (dir == 'E')
+		i = 90.0;
+	if (dir == 'S')
+		i = 180.0;
+	if (dir == 'W')
+		i = 270.0;
+	data->player.deg_dir = i; 
+}
+
+void	locate_player(t_data *data)
+{
+	char **map;
+	int i;
+	int j;
+
+	map = data->map.map;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
+			{
+				data->player.x = j;
+				data->player.y = i;
+				set_deg_dir(data, map[i][j]);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void init_map(t_data *data)
 {
 	char	*file_content;
@@ -157,6 +196,7 @@ void init_map(t_data *data)
 		quit(data);
 	}
 	data->map.map_dim = map_size(data);
+	locate_player(data);
 	printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
 	printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);

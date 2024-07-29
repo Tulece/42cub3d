@@ -44,6 +44,7 @@ typedef struct s_player
 	double	plane_x;
 	double	plane_y;
 	double	speed;
+	double	deg_dir;
 }			t_player;
 
 typedef struct s_map

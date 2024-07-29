@@ -1,22 +1,24 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# ifdef __linux__
-#  include <X11/keysym.h>
-#  include <X11/X.h>
-#  define KEY_Z 122
-#  define KEY_Q 113
-#  define KEY_S 115
-#  define KEY_D 100
-#  define ESC 65307
-# elif __APPLE__
+// # ifdef __linux__
+// # include <X11/keysym.h>
+// # include <X11/X.h>
+// #  define KEY_Z 122
+// #  define KEY_Q 113
+// #  define KEY_S 115
+// #  define KEY_D 100
+// #  define ESC 65307
+# ifdef __APPLE__
 #  include <ApplicationServices/ApplicationServices.h>
+# endif
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define KEY_R_ARROW 65363
+#  define KEY_L_ARROW 65361
 #  define KEY_ESC 65307
-# endif
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"

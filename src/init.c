@@ -14,7 +14,7 @@ void init_data(t_data *data)
 	data->player.dir_y = 0;
 	data->player.plane_x = 0;
 	data->player.plane_y = 0.66;
-	data->player.speed = 2.0; // Vitesse du joueur en pixels
+	data->player.speed = 1.0; // Vitesse du joueur en pixels
 }
 
 // void init_textures(t_data *data)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anporced <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tgibert <tgibert@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 22:17:24 by anporced          #+#    #+#              #
-#    Updated: 2024/07/10 16:59:07 by anporced         ###   ########.fr        #
+#    Updated: 2024/07/29 12:13:57 by tgibert          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT_PATH = libft/
 LIBFT_FILE = libft/libft.a
 MLX_PATH = minilibx-linux/libmlx.a
 MLX_FILE = libmlx.a
-MLX_FLAGS = -L/usr/X11R6/lib -lX11 -lXext
+MLX_FLAGS = -L/usr/X11R6/lib -lX11 -lXext -lm
 
 SRC 	=	$(wildcard src/*.c)
 OBJ 	=	$(patsubst %.c,%.o,$(SRC))
