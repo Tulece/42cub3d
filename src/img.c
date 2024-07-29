@@ -37,9 +37,9 @@ void draw_tile(t_data *data, int x, int y, int color)
 		{
 			mlx_pixel_put(data->mlx, data->win, pixel_x + j, pixel_y + i, color);
 		}
-		
+
 	}
-	
+
 }
 
 void draw_map(t_data *data)
@@ -52,9 +52,9 @@ void draw_map(t_data *data)
 		for (x = 0; x < data->map.map_dim.x; x++)
 		{
 			if (data->map.map[y][x] == '1')
-				draw_tile(data, x, y, 0xFFFFFF); // Blanc pour les murs
+				draw_tile(data, x, y, 0xFFFFFF);
 			else
-				draw_tile(data, x, y, 0x000000); // Noir pour le sol
+				draw_tile(data, x, y, 0x000000);
 		}
 	}
 }
@@ -63,5 +63,5 @@ void draw_player(t_data *data)
 {
 	int player_pixel_x = (int)(data->player.x);
 	int player_pixel_y = (int)(data->player.y);
-	draw_tile(data, player_pixel_y, player_pixel_x, 0xFF0000);
+	draw_tile(data, player_pixel_x, player_pixel_y, 0xFF0000);
 }
