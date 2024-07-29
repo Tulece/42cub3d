@@ -8,7 +8,6 @@ int main(int argc, char **argv)
 		error_exit("Usage: ./cub3D <map.cub>", NULL);
 	init_data(&data);
 	data.map.map_path = ft_strdup(argv[1]);
-	ft_printf("path = %s\n",data.map.map_path);
 	init_map(&data);
 	// init_textures(&data);
 	// init_colors(&data);
