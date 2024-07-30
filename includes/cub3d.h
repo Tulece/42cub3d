@@ -51,6 +51,7 @@ int handle_keyrelease(int keycode, t_data *data);
 
 // img
 void	update_player_position(t_data *data, double delta_x, double delta_y);
+void    update_player_position_2(t_data *data, int dir);
 void    update_player_dir(t_data *data, int dir);
 void	draw_player(t_data *data);
 void	draw_map(t_data *data);
@@ -91,5 +92,7 @@ int	hook_switch(int keycode, t_data *data);
 // exit.c
 int	quit(t_data *data);
 int	cross_quit(t_data *data);
+
+double	degrad(int deg);
 
 #endif

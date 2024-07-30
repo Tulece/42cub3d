@@ -35,6 +35,21 @@ void update_player_position(t_data *data, double delta_x, double delta_y)
 		data->player.y = new_y;
 }
 
+void update_player_position_2(t_data *data, int dir)
+{
+	double	d_x;
+	double	d_y;
+	int		d_dir;
+
+	d_dir = dir * 90;
+	d_dir += data->player.deg_dir;
+	d_dir %= 360;
+
+	d_x = data->player.speed * sin(degrad(d_dir));
+	d_y = data->player.speed * cos(degrad(d_dir));
+	update_player_position(data, d_x, d_y);
+}
+
 void draw_tile(t_data *data, int x, int y, int color)
 {
 	int pixel_x = x * TILE_SIZE;
@@ -107,7 +122,7 @@ void draw_player(t_data *data)
 		j = 0;
 		while (j < 4)
 		{
-			mlx_pixel_put(data->mlx, data->win, ((int)(data->player.x * TILE_SIZE)) + j, ((int)(data->player.y * TILE_SIZE)) + i, 0xFF0000);
+			mlx_pixel_put(data->mlx, data->win, ((int)(data->player.x * TILE_SIZE - 2)) + j, ((int)(data->player.y * TILE_SIZE) - 2) + i, 0xFF0000);
 			j++;
 		}
 		i++;
