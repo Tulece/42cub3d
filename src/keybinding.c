@@ -12,6 +12,10 @@ int handle_keypress(int keycode, t_data *data)
 		update_player_position(data, 0, data->player.speed);
 	else if (keycode == KEY_D)
 		update_player_position(data, data->player.speed, 0);
+	else if (keycode == KEY_R_ARROW)
+		update_player_dir(data, -1);
+	else if (keycode == KEY_L_ARROW)
+		update_player_dir(data, 1);
 	render_frame(data);
 	return (0);
 }

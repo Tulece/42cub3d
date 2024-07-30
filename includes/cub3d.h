@@ -12,13 +12,14 @@
 # ifdef __APPLE__
 #  include <ApplicationServices/ApplicationServices.h>
 # endif
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-#  define KEY_R_ARROW 65363
-#  define KEY_L_ARROW 65361
-#  define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_R_ARROW 65363
+# define KEY_L_ARROW 65361
+# define KEY_ESC 65307
+# define PI 3.14159265358979323846
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
@@ -50,6 +51,7 @@ int handle_keyrelease(int keycode, t_data *data);
 
 // img
 void	update_player_position(t_data *data, double delta_x, double delta_y);
+void    update_player_dir(t_data *data, int dir);
 void	draw_player(t_data *data);
 void	draw_map(t_data *data);
 
