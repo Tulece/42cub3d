@@ -10,7 +10,9 @@ int is_collision(t_data *data, double x, double y)
 
 	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
 		return 1; // Treat out-of-bounds as a collision
-	return (data->map.map[map_y][map_x] == '1');
+	if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
+		return 1;
+	return (0);
 }
 
 void update_player_dir(t_data *data, int dir)
@@ -39,12 +41,12 @@ void update_player_position_2(t_data *data, int dir)
 {
 	double	d_x;
 	double	d_y;
-	int		d_dir;
+	double	d_dir;
 
 	d_dir = dir * 90;
 	d_dir += data->player.deg_dir;
-	d_dir %= 360;
-
+	if (d_dir > 360)
+		d_dir -= 360;
 	d_x = data->player.speed * sin(degrad(d_dir));
 	d_y = data->player.speed * cos(degrad(d_dir));
 	update_player_position(data, d_x, d_y);
@@ -82,9 +84,9 @@ void draw_map(t_data *data)
 	}
 }
 
-double	degrad(int deg)
+double	degrad(double deg)
 {
-	return (((double)(deg)) * (PI / 180.0));
+	return (((deg)) * (PI / 180.0));
 }
 
 void draw_view(t_data *data)
@@ -95,15 +97,20 @@ void draw_view(t_data *data)
 	t_axes	pos;
 
     i = 0;
-    while (i < 45)
+    while (i < 90)
     {
         j = 0;
-        angle = degrad(data->player.deg_dir - 22 + (i * (44.0 / 45))); // Ajustement de l'angle
-        while (j < 20)
+        angle = degrad(data->player.deg_dir - 44 + 90 + (i * (44.0 / 45))); // Ajustement de l'angle
+        while (j < 40)
         {
             pos.x = (int)(data->player.x * TILE_SIZE + j * sin(angle));
             pos.y = (int)(data->player.y * TILE_SIZE + j * cos(angle));
-            mlx_pixel_put(data->mlx, data->win, pos.x, pos.y, 0xFF0000);
+			if (!is_collision(data, pos.x / TILE_SIZE, pos.y / TILE_SIZE))
+			{
+	            mlx_pixel_put(data->mlx, data->win, pos.x, pos.y, 0xFF0000);
+			}
+			else
+				break;
             j += 0.1;
         }
         i++;

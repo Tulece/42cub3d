@@ -37,7 +37,7 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 
-# define TILE_SIZE 8
+# define TILE_SIZE 16
 
 // Initialisation
 void init_data(t_data *data);
@@ -93,6 +93,6 @@ int	hook_switch(int keycode, t_data *data);
 int	quit(t_data *data);
 int	cross_quit(t_data *data);
 
-double	degrad(int deg);
+double	degrad(double deg);
 
 #endif
