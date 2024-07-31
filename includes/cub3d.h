@@ -62,6 +62,7 @@ void parse_map(t_data *data, const char *map_path);
 
 // Raycasting
 void perform_raycasting(t_data *data);
+void calculate_vectors(t_player *player);
 
 // Events
 int handle_keypress(int keycode, t_data *data);

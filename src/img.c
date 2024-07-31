@@ -22,6 +22,7 @@ void update_player_dir(t_data *data, int dir)
 		data->player.deg_dir -= 360;
 	else if (data->player.deg_dir < 0)
 		data->player.deg_dir += 360;
+	calculate_vectors(&data->player);
 }
 
 void update_player_position(t_data *data, double delta_x, double delta_y)

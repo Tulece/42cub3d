@@ -1,5 +1,14 @@
 #include "../includes/cub3d.h"
 
+void calculate_vectors(t_player *player)
+{
+    double rad_angle = degrad(player->deg_dir);
+    player->dir_x = cos(rad_angle);
+    player->dir_y = sin(rad_angle);
+    player->plane_x = -player->dir_y * 0.66;
+    player->plane_y = player->dir_x * 0.66;
+}
+
 void init_data(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -14,6 +23,7 @@ void init_data(t_data *data)
 	data->player.plane_y = 0.66;
 	data->player.speed = 0.2; // Vitesse du joueur en pixels
 	data->player.pov_speed = 3.0;
+	calculate_vectors(&data->player);
 }
 
 // void init_textures(t_data *data)
