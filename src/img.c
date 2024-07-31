@@ -40,16 +40,29 @@ void update_player_position(t_data *data, double delta_x, double delta_y)
 
 void update_player_position_2(t_data *data, int dir)
 {
-	double	d_x;
-	double	d_y;
-	double	d_dir;
+	double d_x = 0.0;
+	double d_y = 0.0;
+	// double d_dir;
 
-	d_dir = dir * 90;
-	d_dir += data->player.deg_dir;
-	if (d_dir > 360)
-		d_dir -= 360;
-	d_x = data->player.speed * sin(degrad(d_dir));
-	d_y = data->player.speed * cos(degrad(d_dir));
+	// Ajustez l'angle en fonction de la direction de déplacement
+	if (dir == 0) {
+		// Déplacement vers l'avant
+		d_x = data->player.speed * cos(degrad(data->player.deg_dir));
+		d_y = data->player.speed * sin(degrad(data->player.deg_dir));
+	} else if (dir == 1) {
+		// Déplacement vers l'arrière
+		d_x = -data->player.speed * cos(degrad(data->player.deg_dir));
+		d_y = -data->player.speed * sin(degrad(data->player.deg_dir));
+	} else if (dir == 2) {
+		// Déplacement vers la gauche
+		d_x = -data->player.speed * sin(degrad(data->player.deg_dir));
+		d_y = data->player.speed * cos(degrad(data->player.deg_dir));
+	} else if (dir == 3) {
+		// Déplacement vers la droite
+		d_x = data->player.speed * sin(degrad(data->player.deg_dir));
+		d_y = -data->player.speed * cos(degrad(data->player.deg_dir));
+	}
+
 	update_player_position(data, d_x, d_y);
 }
 
