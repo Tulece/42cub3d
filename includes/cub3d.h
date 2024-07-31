@@ -53,8 +53,8 @@ int handle_keyrelease(int keycode, t_data *data);
 void	update_player_position(t_data *data, double delta_x, double delta_y);
 void    update_player_position_2(t_data *data, int dir);
 void    update_player_dir(t_data *data, int dir);
-void	draw_player(t_data *data);
-void	draw_map(t_data *data);
+void	draw_player(t_data *data, t_img *img);
+void	draw_map(t_data *data, t_img *img);
 
 
 // Parsing
@@ -84,8 +84,8 @@ void cleanup(t_data *data);
 
 
 
-
-
+void    render_mini_map(t_data *data);
+int is_collision(t_data *data, double x, double y);
 
 // keybinding.c
 int	hook_switch(int keycode, t_data *data);

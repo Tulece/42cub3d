@@ -74,8 +74,7 @@ int render_frame(t_data *data)
 {
 	// mlx_clear_window(data->mlx, data->win);
 	perform_raycasting(data);
-	draw_map(data);
-	draw_player(data);
+	render_mini_map(data);
 	return (0);
 }
 
