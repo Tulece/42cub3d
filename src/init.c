@@ -9,6 +9,7 @@ void calculate_vectors(t_player *player)
     player->plane_y = player->dir_x * 0.66;
 }
 
+
 void init_data(t_data *data)
 {
 	data->mlx = mlx_init();
