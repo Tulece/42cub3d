@@ -4,10 +4,8 @@
 void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img)
 {
 	int pixel;
-	int	i;
-	
+
 	pixel = (pos.x * 4) + (pos.y * img->line_length);
-	i = 0;
     img->addr[pixel] = color & 0xFF; // Blue
     img->addr[pixel + 1] = (color >> 8) & 0xFF; // Green
     img->addr[pixel + 2] = (color >> 16) & 0xFF; // Red
@@ -115,6 +113,5 @@ void    render_mini_map(t_data *data)
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 	draw_map(data, &img);
 	draw_player(data, &img);
-	usleep(1000);
 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
 }

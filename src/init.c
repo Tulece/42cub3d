@@ -7,6 +7,8 @@ void calculate_vectors(t_player *player)
     player->dir_y = sin(rad_angle);
     player->plane_x = -player->dir_y * 0.66;
     player->plane_y = player->dir_x * 0.66;
+	printf("dir_x: %f, dir_y: %f\n", player->dir_x, player->dir_y);
+    printf("plane_x: %f, plane_y: %f\n", player->plane_x, player->plane_y);
 }
 
 

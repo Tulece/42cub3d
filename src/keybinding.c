@@ -29,9 +29,9 @@ int handle_keypress(int keycode, t_data *data)
 	else if (keycode == KEY_D)
 		update_player_position_2(data, 0);
 	else if (keycode == KEY_R_ARROW)
-		update_player_dir(data, -1);
-	else if (keycode == KEY_L_ARROW)
 		update_player_dir(data, 1);
+	else if (keycode == KEY_L_ARROW)
+		update_player_dir(data, -1);
 	return (0);
 }
 
