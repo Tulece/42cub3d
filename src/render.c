@@ -59,7 +59,9 @@ void perform_raycasting(t_data *data) {
         if (drawStart < 0) drawStart = 0;
         int drawEnd = lineHeight / 2 + 600 / 2;
         if (drawEnd >= 600) drawEnd = 600 - 1;
-
+  		for (int y = 0; y < drawStart; y++) {
+            mlx_pixel_put(data->mlx, data->win, x, y, 0x000000);
+        }
         int color = (side == 1) ? 0xAAAAAA : 0xFFFFFF;
 
         for (int y = drawStart; y < drawEnd; y++) {
