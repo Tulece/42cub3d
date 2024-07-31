@@ -1,6 +1,15 @@
 #include "../includes/cub3d.h"
 
-void perform_raycasting(t_data *data) {
+t_axes intopos(int x, int y)
+{
+    t_axes pos;
+
+    pos.x = x;
+    pos.y = y;
+    return (pos);
+}
+
+void perform_raycasting(t_data *data, t_img *img) {
 	for (int x = 0; x < 800; x++) { // Supposons une largeur d'écran de 800
 		double cameraX = 2 * x / 800.0 - 1;
 		double rayDirX = data->player.dir_x + data->player.plane_x * cameraX;
@@ -60,23 +69,30 @@ void perform_raycasting(t_data *data) {
 		int drawEnd = lineHeight / 2 + 600 / 2;
 		if (drawEnd >= 600) drawEnd = 600 - 1;
   		for (int y = 0; y < drawStart; y++) {
-			mlx_pixel_put(data->mlx, data->win, x, y, 0x000000);
+			put_pixel_on_img(data, intopos(x, y), 0x000000, img);
 		}
 		for (int y = drawEnd; y < 600; y++) {
-			mlx_pixel_put(data->mlx, data->win, x, y, 0x000000);
+			put_pixel_on_img(data, intopos(x, y), 0x000000, img);
 		}
 		int color = (side == 1) ? 0xAAAAAA : 0xFFFFFF;
 		for (int y = drawStart; y < drawEnd; y++) {
-			mlx_pixel_put(data->mlx, data->win, x, y, color);
+			put_pixel_on_img(data, intopos(x, y), color, img);
 		}
 	}
+    mlx_put_image_to_window(data->mlx, data->win, img->img, 0, 0);
 }
 
 int render_frame(t_data *data)
 {
+    t_img	img;
+
+    img.width = 800;
+	img.heigth = 600;
+	img.img = mlx_new_image(data->mlx, img.width, img.heigth);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 	// mlx_clear_window(data->mlx, data->win);
-	perform_raycasting(data);
-	// render_mini_map(data);
+	perform_raycasting(data, &img);
+	render_mini_map(data, &img);
 	return (0);
 }
 

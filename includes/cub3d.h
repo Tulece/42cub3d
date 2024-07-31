@@ -61,7 +61,7 @@ void	draw_map(t_data *data, t_img *img);
 void parse_map(t_data *data, const char *map_path);
 
 // Raycasting
-void perform_raycasting(t_data *data);
+void perform_raycasting(t_data *data, t_img *img);
 void calculate_vectors(t_player *player);
 
 // Events
@@ -82,9 +82,9 @@ void cleanup(t_data *data);
 
 
 
-
-
-void    render_mini_map(t_data *data);
+t_axes intopos(int x, int y);
+void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img);
+void    render_mini_map(t_data *data, t_img *img);
 int is_collision(t_data *data, double x, double y);
 
 // keybinding.c

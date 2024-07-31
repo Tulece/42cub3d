@@ -7,8 +7,8 @@ void calculate_vectors(t_player *player)
     player->dir_y = sin(rad_angle);
     player->plane_x = -player->dir_y * 0.66;
     player->plane_y = player->dir_x * 0.66;
-	printf("dir_x: %f, dir_y: %f\n", player->dir_x, player->dir_y);
-    printf("plane_x: %f, plane_y: %f\n", player->plane_x, player->plane_y);
+	// printf("dir_x: %f, dir_y: %f\n", player->dir_x, player->dir_y);
+    // printf("plane_x: %f, plane_y: %f\n", player->plane_x, player->plane_y);
 }
 
 
@@ -24,8 +24,8 @@ void init_data(t_data *data)
 	data->player.dir_y = 0;
 	data->player.plane_x = 0;
 	data->player.plane_y = 0.66;
-	data->player.speed = 0.2; // Vitesse du joueur en pixels
-	data->player.pov_speed = 3.0;
+	data->player.speed = 0.15; // Vitesse du joueur en pixels
+	data->player.pov_speed = 2.0;
 	calculate_vectors(&data->player);
 }
 

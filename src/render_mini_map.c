@@ -101,17 +101,36 @@ void draw_player(t_data *data, t_img *img)
 	draw_view(data, img);
 }
 
-void    render_mini_map(t_data *data)
+void draw_image_in_image(t_img *src, t_img *dst, t_axes pos)
+{
+    int x, y;
+    int pixel_src, pixel_dst;
+
+    for (y = 0; y < src->heigth; y++)
+    {
+        for (x = 0; x < src->width; x++)
+        {
+            pixel_src = y * src->line_length + x * (src->bpp / 8);
+            pixel_dst = (pos.y + y) * dst->line_length + (pos.x + x) * (dst->bpp / 8);
+
+            dst->addr[pixel_dst] = src->addr[pixel_src];       // Blue
+            dst->addr[pixel_dst + 1] = src->addr[pixel_src + 1]; // Green
+            dst->addr[pixel_dst + 2] = src->addr[pixel_src + 2]; // Red
+            dst->addr[pixel_dst + 3] = src->addr[pixel_src + 3]; // Alpha (if any)
+        }
+    }
+}
+
+void    render_mini_map(t_data *data, t_img *frame)
 {
 	t_img	img;
-	int		width;
-	int		heigth;
 
-	width = data->map.map_dim.x * TILE_SIZE;
-	heigth = data->map.map_dim.y * TILE_SIZE;
-	img.img = mlx_new_image(data->mlx, width, heigth);
+	img.width = data->map.map_dim.x * TILE_SIZE;
+	img.heigth = data->map.map_dim.y * TILE_SIZE;
+	img.img = mlx_new_image(data->mlx, img.width, img.heigth);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 	draw_map(data, &img);
 	draw_player(data, &img);
-	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+	draw_image_in_image(&img, frame, intopos(0,0));
+	// mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
 }

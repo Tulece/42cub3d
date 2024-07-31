@@ -23,6 +23,8 @@ typedef struct s_img
 	int		bpp;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		heigth;
 }			t_img;
 
 typedef struct s_texture
