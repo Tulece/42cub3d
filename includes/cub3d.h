@@ -37,7 +37,7 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 
-# define TILE_SIZE 16
+# define TILE_SIZE 8
 
 // Initialisation
 void init_data(t_data *data);

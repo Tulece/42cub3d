@@ -79,7 +79,6 @@ void perform_raycasting(t_data *data, t_img *img) {
 			put_pixel_on_img(data, intopos(x, y), color, img);
 		}
 	}
-    mlx_put_image_to_window(data->mlx, data->win, img->img, 0, 0);
 }
 
 int render_frame(t_data *data)
@@ -93,6 +92,8 @@ int render_frame(t_data *data)
 	// mlx_clear_window(data->mlx, data->win);
 	perform_raycasting(data, &img);
 	render_mini_map(data, &img);
+	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+	mlx_destroy_image(data->mlx, img.img);
 	return (0);
 }
 

@@ -132,5 +132,5 @@ void    render_mini_map(t_data *data, t_img *frame)
 	draw_map(data, &img);
 	draw_player(data, &img);
 	draw_image_in_image(&img, frame, intopos(0,0));
-	// mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+	mlx_destroy_image(data->mlx, img.img);
 }
