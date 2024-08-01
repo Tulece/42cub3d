@@ -136,7 +136,7 @@ void draw_view(t_data *data, t_img *img)
 	{
 		j = 0;
 		angle = degrad(data->player.deg_dir - 34 + (i * (44.0 / 45))); // Ajustement de l'angle
-		while (j < 40)
+		while (j < 35)
 		{
 			pos.x = (int)(data->player.x * TILE_SIZE + j * cos(angle));
 			pos.y = (int)(data->player.y * TILE_SIZE + j * sin(angle));
