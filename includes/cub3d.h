@@ -36,6 +36,7 @@
 # define KEY_DOWN 65364
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define MM_SIZE 10
 
 # define TILE_SIZE 8
 

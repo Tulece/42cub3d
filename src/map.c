@@ -167,11 +167,13 @@ void	locate_player(t_data *data)
 				data->player.x = j;
 				data->player.y = i;
 				set_deg_dir(data, map[i][j]);
+				map[i][j] = '0';
 			}
 			j++;
 		}
 		i++;
 	}
+	calculate_vectors(&data->player);
 }
 
 void init_map(t_data *data)
@@ -201,7 +203,6 @@ void init_map(t_data *data)
 	printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
 	printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);
-	i = -1;
 }
 
 // void	display_map(t_data *data, t_axes i)

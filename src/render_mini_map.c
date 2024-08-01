@@ -33,20 +33,25 @@ void draw_tile(t_data *data, t_axes pos, int color, t_img *img)
 void draw_map(t_data *data, t_img *img)
 {
 	t_axes pos;
+	t_axes p_pos;
 
 	pos.y = 0;
-	for (pos.y = 0; pos.y < data->map.map_dim.y; pos.y++)
+	for (pos.y = 0; pos.y < 16; pos.y++)
 	{
-		for (pos.x = 0; pos.x < data->map.map_dim.x; pos.x++)
+		for (pos.x = 0; pos.x < 16; pos.x++)
 		{
-			if (data->map.map[pos.y][pos.x] == '1')
-				draw_tile(data, pos, 0xFFFFFF, img);
-			else
-				draw_tile(data, pos, 0x000000, img);
+			p_pos.x = (int)(floor(data->player.x) + pos.x - 8);
+			p_pos.y = (int)(floor(data->player.y) + pos.y - 8);
+			if (p_pos.x >= 0 && p_pos.x < data->map.map_dim.x && p_pos.y >= 0 && p_pos.y < data->map.map_dim.y)
+			{
+				if (data->map.map[p_pos.y][p_pos.x] == '1')
+					draw_tile(data, p_pos, 0xFFFFFF, img);
+				else
+					draw_tile(data, p_pos, 0x000000, img);
+			}
 		}
 	}
 }
-
 
 void draw_view(t_data *data, t_img *img)
 {
@@ -56,14 +61,14 @@ void draw_view(t_data *data, t_img *img)
 	t_axes	pos;
 
 	i = 0;
-	while (i < 90)
+	while (i < 70)
 	{
 		j = 0;
-		angle = degrad(data->player.deg_dir - 44 + 90 + (i * (44.0 / 45))); // Ajustement de l'angle
-		while (j < 40)
+		angle = degrad(data->player.deg_dir - 34 + (i * (44.0 / 45))); // Ajustement de l'angle
+		while (1)
 		{
-			pos.x = (int)(data->player.x * TILE_SIZE + j * sin(angle));
-			pos.y = (int)(data->player.y * TILE_SIZE + j * cos(angle));
+			pos.x = (int)(data->player.x * TILE_SIZE + j * cos(angle));
+			pos.y = (int)(data->player.y * TILE_SIZE + j * sin(angle));
 			if (!is_collision(data, pos.x / TILE_SIZE, pos.y / TILE_SIZE))
 			{
 				put_pixel_on_img(data, pos, 0xFF0000, img);
@@ -81,22 +86,23 @@ void draw_player(t_data *data, t_img *img)
 {
 	int		i;
 	int		j;
+	t_axes	s_pos;
 	t_axes	pos;
 
 	i = 0;
-	pos.x = (int)(data->player.x * TILE_SIZE - 2);
-	pos.y = ((int)(data->player.y * TILE_SIZE) - 2);
+	s_pos.x = ((int)(data->player.x * TILE_SIZE) - 2);
+	s_pos.y = ((int)(data->player.y * TILE_SIZE) - 2);
 	while (i < 4)
 	{
 		j = 0;
 		while (j < 4)
 		{
+			pos.x = s_pos.x + j;
+			pos.y = s_pos.y + i;
 			put_pixel_on_img(data, pos, 0xFF0000, img);
 			j++;
-			pos.x++;
 		}
 		i++;
-		pos.y++;
 	}
 	draw_view(data, img);
 }
