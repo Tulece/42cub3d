@@ -1,6 +1,53 @@
 #include "../includes/cub3d.h"
 #include "../includes/structs.h"
 
+int x_off(t_data *data)
+{
+    int offset;
+
+    if ((int)floor(data->player.x) + MM_SIZE / 2 > data->map.map_dim.x)
+    {
+        offset = data->map.map_dim.x - MM_SIZE;
+    }
+    else if ((int)floor(data->player.x) - MM_SIZE / 2 < 0)
+    {
+        offset = 0;
+    }
+    else
+    {
+        offset = (int)floor(data->player.x) - MM_SIZE / 2;
+    }
+    return offset;
+}
+
+int y_off(t_data *data)
+{
+    int offset;
+
+    if ((int)floor(data->player.y) + MM_SIZE / 2 > data->map.map_dim.y)
+    {
+        offset = data->map.map_dim.y - MM_SIZE;
+    }
+    else if ((int)floor(data->player.y) - MM_SIZE / 2 < 0)
+    {
+        offset = 0;
+    }
+    else
+    {
+        offset = (int)floor(data->player.y) - MM_SIZE / 2;
+    }
+    return offset;
+}
+
+t_axes offset_mm(t_data *data, t_axes src)
+{
+    t_axes pos;
+
+    pos.x = src.x - x_off(data);
+    pos.y = src.y - y_off(data);
+    return pos;
+}
+
 void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img)
 {
 	int pixel;
@@ -12,46 +59,70 @@ void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img)
     img->addr[pixel + 3] = (color >> 24) & 0xFF;
 }
 
+void put_pixel_on_img_offset(t_data *data, t_axes pos, int color, t_img *img)
+{
+    t_axes mm_pos;
+    t_axes tile_pos;
+
+    // Convertir les coordonnées de pixels en coordonnées de tuile
+    tile_pos.x = pos.x / TILE_SIZE;
+    tile_pos.y = pos.y / TILE_SIZE;
+
+    // Appliquer l'offset pour obtenir la position sur la minimap
+    mm_pos = offset_mm(data, tile_pos);
+    mm_pos.x *= TILE_SIZE;
+    mm_pos.y *= TILE_SIZE;
+
+    // Ajouter la position dans la tuile
+    mm_pos.x += pos.x % TILE_SIZE;
+    mm_pos.y += pos.y % TILE_SIZE;
+
+    // Dessiner le pixel sur l'image
+    put_pixel_on_img(data, mm_pos, color, img);
+}
+
 void draw_tile(t_data *data, t_axes pos, int color, t_img *img)
 {
-	t_axes new_pos;
-	t_axes pix_pos;
+    t_axes pix_pos;
 
-	new_pos.x = pos.x * TILE_SIZE;
-	new_pos.y = pos.y * TILE_SIZE;
-	for (int i = 0; i < TILE_SIZE; i++)
-	{
-		for (int j = 0; j < TILE_SIZE; j++)
-		{
-			pix_pos.x = new_pos.x + j;
-			pix_pos.y = new_pos.y + i;
-			put_pixel_on_img(data, pix_pos, color, img);
-		}
-	}
+    for (int i = 0; i < TILE_SIZE; i++)
+    {
+        for (int j = 0; j < TILE_SIZE; j++)
+        {
+            pix_pos.x = (pos.x * TILE_SIZE) + j;
+            pix_pos.y = (pos.y * TILE_SIZE) + i;
+            put_pixel_on_img(data, pix_pos, color, img);
+        }
+    }
 }
 
 void draw_map(t_data *data, t_img *img)
 {
-	t_axes pos;
-	t_axes p_pos;
+    t_axes pos;
+    t_axes p_pos;
 
-	pos.y = 0;
-	for (pos.y = 0; pos.y < 16; pos.y++)
-	{
-		for (pos.x = 0; pos.x < 16; pos.x++)
-		{
-			p_pos.x = (int)(floor(data->player.x) + pos.x - 8);
-			p_pos.y = (int)(floor(data->player.y) + pos.y - 8);
-			if (p_pos.x >= 0 && p_pos.x < data->map.map_dim.x && p_pos.y >= 0 && p_pos.y < data->map.map_dim.y)
-			{
-				if (data->map.map[p_pos.y][p_pos.x] == '1')
-					draw_tile(data, p_pos, 0xFFFFFF, img);
-				else
-					draw_tile(data, p_pos, 0x000000, img);
-			}
-		}
-	}
+    for (pos.y = 0; pos.y < MM_SIZE; pos.y++)
+    {
+        for (pos.x = 0; pos.x < MM_SIZE; pos.x++)
+        {
+            p_pos.x = x_off(data) + pos.x;
+            p_pos.y = y_off(data) + pos.y;
+            
+            if (p_pos.x >= 0 && p_pos.x < data->map.map_dim.x && p_pos.y >= 0 && p_pos.y < data->map.map_dim.y)
+            {
+                if (data->map.map[p_pos.y][p_pos.x] == '1')
+                    draw_tile(data, pos, 0xFFFFFF, img);
+                else
+                    draw_tile(data, pos, 0x000000, img);
+            }
+            else
+            {
+                draw_tile(data, pos, 0x555555, img); // Optional: Out of bounds area
+            }
+        }
+    }
 }
+
 
 void draw_view(t_data *data, t_img *img)
 {
@@ -65,13 +136,13 @@ void draw_view(t_data *data, t_img *img)
 	{
 		j = 0;
 		angle = degrad(data->player.deg_dir - 34 + (i * (44.0 / 45))); // Ajustement de l'angle
-		while (1)
+		while (j < 40)
 		{
 			pos.x = (int)(data->player.x * TILE_SIZE + j * cos(angle));
 			pos.y = (int)(data->player.y * TILE_SIZE + j * sin(angle));
 			if (!is_collision(data, pos.x / TILE_SIZE, pos.y / TILE_SIZE))
 			{
-				put_pixel_on_img(data, pos, 0xFF0000, img);
+				put_pixel_on_img_offset(data, pos, 0xFF0000, img);
 			}
 			else
 				break;
@@ -99,7 +170,7 @@ void draw_player(t_data *data, t_img *img)
 		{
 			pos.x = s_pos.x + j;
 			pos.y = s_pos.y + i;
-			put_pixel_on_img(data, pos, 0xFF0000, img);
+			put_pixel_on_img_offset(data, pos, 0xFF0000, img);
 			j++;
 		}
 		i++;
@@ -131,8 +202,8 @@ void    render_mini_map(t_data *data, t_img *frame)
 {
 	t_img	img;
 
-	img.width = data->map.map_dim.x * TILE_SIZE;
-	img.heigth = data->map.map_dim.y * TILE_SIZE;
+	img.width = MM_SIZE * TILE_SIZE;
+	img.heigth = MM_SIZE * TILE_SIZE;
 	img.img = mlx_new_image(data->mlx, img.width, img.heigth);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.endian);
 	draw_map(data, &img);
