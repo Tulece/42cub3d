@@ -7,7 +7,6 @@ int	get_file_size(t_data *data)
 	char	c;
 
 	fd = open(data->map.map_path, O_RDONLY);
-		printf("%s\n", data->map.map_path);
 	if (fd == -1)
 	{
 		ft_printf("An error occured while opening the map.\n");
@@ -100,7 +99,7 @@ int	parse_texture_paths(t_data *data, char **lines)
 		else if (ft_strncmp(lines[i], "C ", 2) == 0)
 			data->texture.ceiling_color = ft_strtrim(lines[i] + 2, " ");
 		else if (lines[i][0] >= '0' && lines[i][0] <= '9')
-			break; // Si la ligne commence par un chiffre, on considère que c'est une ligne de la carte
+			break ; // Si la ligne commence par un chiffre, on considère que c'est une ligne de la carte a revoir donc
 		else
 		{
 			ft_printf("Error: Invalid line detected: %s\n", lines[i]);
