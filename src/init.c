@@ -24,8 +24,8 @@ void	init_data(t_data *data)
 	data->player.dir_y = 0;
 	data->player.plane_x = 0;
 	data->player.plane_y = 0;
-	data->player.speed = 0.15;
-	data->player.pov_speed = 2.0;
+	data->player.speed = 0.5;
+	data->player.pov_speed = 4.0;
 }
 
 void	init_textures(t_data *data)
