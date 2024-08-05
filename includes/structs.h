@@ -1,5 +1,5 @@
 #ifndef STRUCTS_H
-#define STRUCTS_H
+# define STRUCTS_H
 
 typedef enum s_textures_index
 {
@@ -88,6 +88,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
+	int			key_states[6];
 	t_player	player;
 	t_texture	texture;
 	t_map		map;

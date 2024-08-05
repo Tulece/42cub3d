@@ -18,6 +18,14 @@
 # define KEY_D 100
 # define KEY_R_ARROW 65363
 # define KEY_L_ARROW 65361
+
+# define KEY_W_I 0
+# define KEY_A_I 1
+# define KEY_S_I 2
+# define KEY_D_I 3
+# define KEY_R_ARROW_I 4
+# define KEY_L_ARROW_I 5
+
 # define KEY_ESC 65307
 # define PI 3.14159265358979323846
 

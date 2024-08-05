@@ -184,6 +184,21 @@ void perform_raycasting(t_data *data, t_img *img)
 	}
 }
 
+void	calculate_infos(t_data *data)
+{
+		if (data->key_states[KEY_W_I])
+			update_player_position_2(data, 0);
+		if (data->key_states[KEY_A_I])
+			update_player_position_2(data, 3);
+		if (data->key_states[KEY_S_I])
+			update_player_position_2(data, 1);
+		if (data->key_states[KEY_D_I])
+			update_player_position_2(data, 2);
+		if (data->key_states[KEY_R_ARROW_I])
+			update_player_dir(data, 1);
+		if (data->key_states[KEY_L_ARROW_I])
+			update_player_dir(data, -1);
+}
 
 int	render_frame(t_data *data)
 {
@@ -195,6 +210,7 @@ int	render_frame(t_data *data)
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, \
 	&img.line_length, &img.endian);
 	// mlx_clear_window(data->mlx, data->win);
+	calculate_infos(data);
 	perform_raycasting(data, &img);
 	render_mini_map(data, &img);
 	mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
