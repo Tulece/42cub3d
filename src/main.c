@@ -18,5 +18,6 @@ int main(int argc, char **argv)
 	mlx_do_key_autorepeatoff(data.mlx);
 	mlx_loop(data.mlx);
 	// cleanup(&data);
+	mlx_do_key_autorepeaton(data.mlx);
 	return (0);
 }

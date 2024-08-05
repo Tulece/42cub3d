@@ -1,19 +1,49 @@
 #include "../includes/cub3d.h"
 
+// int is_collision(t_data *data, double x, double y)
+// {
+// 	int map_x;
+// 	int map_y;
+
+// 	map_x = (int)(x);
+// 	map_y = (int)(y);
+
+// 	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
+// 		return 1; // Treat out-of-bounds as a collision
+// 	if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
+// 		return 1;
+// 	return (0);
+// }
+
+#include <math.h>
+
 int is_collision(t_data *data, double x, double y)
 {
-	int map_x;
-	int map_y;
+    int map_x;
+    int map_y;
+	int	i;
+    double margin = 0.2;
+    double points_to_check[4][2] = {
+        {x - margin, y - margin},
+        {x + margin, y - margin},
+        {x - margin, y + margin},
+        {x + margin, y + margin}
+    };
 
-	map_x = (int)(x);
-	map_y = (int)(y);
-
-	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
-		return 1; // Treat out-of-bounds as a collision
-	if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
-		return 1;
-	return (0);
+	i = 0;
+    while (i < 4)
+    {
+        map_x = (int)(points_to_check[i][0]);
+        map_y = (int)(points_to_check[i][1]);
+        if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
+            return 1; // Considérer hors limites comme une collision
+        if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
+            return 1;
+		i++;
+    }
+    return 0;
 }
+
 
 void update_player_dir(t_data *data, int dir)
 {
@@ -42,7 +72,6 @@ void update_player_position_2(t_data *data, int dir)
 {
 	double d_x = 0.0;
 	double d_y = 0.0;
-	// double d_dir;
 
 	// Ajustez l'angle en fonction de la direction de déplacement
 	if (dir == 0) {

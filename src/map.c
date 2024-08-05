@@ -52,7 +52,10 @@ t_axes	map_size(t_data *data)
 {
 	t_axes	size;
 	int		len;
+	int		i;
+	int		j;
 
+	i = -1;
 	size.y = 0;
 	size.x = 0;
 	while (data->map.map[size.y])
@@ -61,6 +64,15 @@ t_axes	map_size(t_data *data)
 		if (len > size.x)
 			size.x = len;
 		size.y++;
+	}
+	while (++i < size.y)
+	{
+		j = 0;
+		while (data->map.map[i][j])
+			j++;
+		while (j < size.x)
+			data->map.map[i][j++] = ' ';
+		data->map.map[i][j] = 0;
 	}
 	return (size);
 }
