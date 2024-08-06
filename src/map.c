@@ -48,14 +48,39 @@ char	**str_to_tab(char *str)
 	return (map);
 }
 
+void	fill_lines(t_axes size, t_data *data)
+{
+	int		i;
+	int		j;
+	char	*nl;
+
+	i = 0;
+	while (i < size.y)
+	{
+		j = 0;
+		nl = malloc(size.x + 1);
+		while (data->map.map[i][j])
+		{
+			nl[j] = data->map.map[i][j];
+			j++;
+		}
+		while (j < size.x)
+		{
+			nl[j] = ' ';
+			j++;
+		}
+		nl[j] = '\0';
+		free(data->map.map[i]);
+		data->map.map[i] = nl;
+		i++;
+	}
+}
+
 t_axes	map_size(t_data *data)
 {
 	t_axes	size;
 	int		len;
-	int		i;
-	int		j;
 
-	i = -1;
 	size.y = 0;
 	size.x = 0;
 	while (data->map.map[size.y])
@@ -65,15 +90,7 @@ t_axes	map_size(t_data *data)
 			size.x = len;
 		size.y++;
 	}
-	while (++i < size.y)
-	{
-		j = 0;
-		while (data->map.map[i][j])
-			j++;
-		while (j < size.x)
-			data->map.map[i][j++] = ' ';
-		data->map.map[i][j] = 0;
-	}
+	fill_lines(size, data);
 	return (size);
 }
 
@@ -187,6 +204,34 @@ void	locate_player(t_data *data)
 	calculate_vectors(&data->player);
 }
 
+char **dup_tab(char **tab)
+{
+	char	**new_tab;
+	int		i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	new_tab = malloc((i + 1) * sizeof(char *));
+	new_tab[i] = NULL;
+	while (--i >= 0)
+		new_tab[i] = ft_strdup(tab[i]);
+	return (new_tab);
+}
+
+void	ft_free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 void init_map(t_data *data)
 {
 	char	*file_content;
@@ -198,7 +243,8 @@ void init_map(t_data *data)
 	lines = ft_split(file_content, '\n');
 	free(file_content);
 	map_start_index = parse_texture_paths(data, lines);
-	data->map.map = &lines[map_start_index];
+	data->map.map = dup_tab(&lines[map_start_index]);
+	ft_free_tab(lines);
 	printf("NO = %s\nSO = %s\nWE = %s\nEA = %s\n", data->texture.no_texture.path, data->texture.so_texture.path, data->texture.we_texture.path, data->texture.ea_texture.path);
 	if (!validate_map(data->map.map))
 	{
