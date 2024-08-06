@@ -249,6 +249,7 @@ int	get_color(char *color_char)
 		color += ft_atoi(colors[i]) <<  (3 - (i + 1)) * 8;
 		i++;
 	}
+	ft_free_tab(colors);
 	return (color);
 }
 
