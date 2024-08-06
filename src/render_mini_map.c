@@ -112,6 +112,8 @@ void draw_map(t_data *data, t_img *img)
             {
                 if (data->map.map[p_pos.y][p_pos.x] == '1')
                     draw_tile(data, pos, 0xFFFFFF, img);
+                else if (data->map.map[p_pos.y][p_pos.x] == '0')
+                    draw_tile(data, pos, 0x888888, img);
                 else
                     draw_tile(data, pos, 0x000000, img);
             }

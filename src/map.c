@@ -172,11 +172,11 @@ void	set_deg_dir(t_data *data, char dir)
 
 	i = 0.0;
 	if (dir == 'N')
-		i = 90.0;
+		i = 270.0;
 	if (dir == 'W')
 		i = 180.0;
 	if (dir == 'S')
-		i = 270.0;
+		i = 90.0;
 	data->player.deg_dir = i;
 }
 
