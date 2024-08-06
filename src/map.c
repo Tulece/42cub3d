@@ -9,12 +9,17 @@ int	get_file_size(t_data *data)
 	fd = open(data->map.map_path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf("An error occured while opening the map.\n");
+		ft_putstr_fd("An error occured while opening the map.\n", 2);
 		quit_early(data);
 	}
 	size = 0;
 	while (read(fd, &c, 1) > 0)
 		size++;
+	if (read(fd, &c, 1) == -1)
+	{
+		ft_putstr_fd("An error occured while reading the map.\n", 2);
+		quit_early(data);
+	}
 	close(fd);
 	return (size);
 }
@@ -27,7 +32,7 @@ char	*file_to_str(t_data *data)
 
 	str = malloc(sizeof(char) * (get_file_size(data) + 1));
 	if (!str)
-		ft_printf("An error occured with malloc.\n");
+		ft_putstr_fd("An error occured with malloc.\n", 2);
 	fd = open(data->map.map_path, O_RDONLY);
 	if (fd == -1)
 		return ("");
@@ -101,7 +106,7 @@ void display_map_in_terminal(t_data *data)
 	if (!data->map.map)
 	{
 		ft_printf("No map loaded.\n");
-		return;
+		return ;
 	}
 	i = -1;
 	while (++i < data->map.map_dim.y)
@@ -131,7 +136,7 @@ int	parse_texture_paths(t_data *data, char **lines)
 			break ; // Si la ligne commence par un chiffre, on considère que c'est une ligne de la carte a revoir donc
 		else
 		{
-			ft_printf("Error: Invalid line detected: %s\n", lines[i]);
+			ft_putstr_fd("Error: Invalid line detected\n", 2);
 			quit_early(data);
 		}
 	}
