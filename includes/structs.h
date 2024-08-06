@@ -33,6 +33,8 @@ typedef struct s_texture
 	t_img	so_texture;
 	t_img	we_texture;
 	t_img	ea_texture;
+	int		floor;
+	int		ceiling;
 	char	*floor_color;
 	char	*ceiling_color;
 }			t_texture;

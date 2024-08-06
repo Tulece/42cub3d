@@ -161,11 +161,11 @@ void	draw_vertical_stripe(t_data *data, t_ray *ray, t_img *img, int x)
 	// Draw ceiling
 	y = -1;
 	while (++y < ray->draw_start)
-		put_pixel_on_img(data, intopos(x, y), 0x000000, img);
+		put_pixel_on_img(data, intopos(x, y), data->texture.ceiling, img);
 	// Draw floor
 	y = ray->draw_end - 1;
 	while (++y < 600)
-		put_pixel_on_img(data, intopos(x, y), 0x000000, img);
+		put_pixel_on_img(data, intopos(x, y), data->texture.floor, img);
 }
 
 void perform_raycasting(t_data *data, t_img *img)

@@ -235,6 +235,23 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
+int	get_color(char *color_char)
+{
+	char	**colors;
+	int		color;
+	int		i;
+
+	color = 0;
+	i = 0;
+	colors = ft_split(color_char, ',');
+	while (i < 3)
+	{
+		color += ft_atoi(colors[i]) <<  (3 - (i + 1)) * 8;
+		i++;
+	}
+	return (color);
+}
+
 void init_map(t_data *data)
 {
 	char	*file_content;
@@ -254,6 +271,8 @@ void init_map(t_data *data)
 	}
 	data->map.map_dim = map_size(data);
 	locate_player(data);
+	data->texture.floor = get_color(data->texture.floor_color);
+	data->texture.ceiling = get_color(data->texture.ceiling_color);
 	printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
 	printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);
