@@ -113,6 +113,41 @@ void display_map_in_terminal(t_data *data)
 		ft_printf("%s\n", data->map.map[i]);
 }
 
+int	validate_texture_paths(t_data *data)
+{
+	int	fd;
+
+	fd = open(data->texture.no_texture.path, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error opening NO texture file");
+		return (0);
+	}
+	close(fd);
+	fd = open(data->texture.so_texture.path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error opening SO texture file", 2);
+		return (0);
+	}
+	close(fd);
+	fd = open(data->texture.we_texture.path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error opening WE texture file", 2);
+		return (0);
+	}
+	close(fd);
+	fd = open(data->texture.ea_texture.path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error opening EA texture file", 2);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
 int	parse_texture_paths(t_data *data, char **lines)
 {
 	int	i;
@@ -133,7 +168,7 @@ int	parse_texture_paths(t_data *data, char **lines)
 		else if (ft_strncmp(lines[i], "C ", 2) == 0)
 			data->texture.ceiling_color = ft_strtrim(lines[i] + 2, " ");
 		else if (lines[i][0] >= '0' && lines[i][0] <= '9')
-			break ; // Si la ligne commence par un chiffre, on considère que c'est une ligne de la carte a revoir donc
+			break ;
 		else
 		{
 			ft_putstr_fd("Error: Invalid line detected\n", 2);
@@ -232,6 +267,8 @@ void	ft_free_tab(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -240,23 +277,34 @@ void	ft_free_tab(char **tab)
 	free(tab);
 }
 
-int	get_color(char *color_char)
+int get_color(char *color_char)
 {
-	char	**colors;
-	int		color;
-	int		i;
+	char    **colors;
+	int     color;
+	int     i;
 
 	color = 0;
 	i = 0;
 	colors = ft_split(color_char, ',');
+	if (!colors)
+	{
+		ft_putstr_fd("Error: Failed to split color string\n", 2);
+		return (-1);
+	}
 	while (i < 3)
 	{
+		if (colors[i] == NULL)
+		{
+			ft_free_tab(colors);
+			return (-1);
+		}
 		color += ft_atoi(colors[i]) <<  (3 - (i + 1)) * 8;
 		i++;
 	}
 	ft_free_tab(colors);
 	return (color);
 }
+
 
 void init_map(t_data *data)
 {
@@ -268,6 +316,8 @@ void init_map(t_data *data)
 	lines = ft_split(file_content, '\n');
 	free(file_content);
 	map_start_index = parse_texture_paths(data, lines);
+	if (!validate_texture_paths(data))
+		quit_early(data);
 	data->map.map = dup_tab(&lines[map_start_index]);
 	ft_free_tab(lines);
 	if (!validate_map(data->map.map))
@@ -278,15 +328,19 @@ void init_map(t_data *data)
 	data->map.map_dim = map_size(data);
 	locate_player(data);
 	data->texture.floor = get_color(data->texture.floor_color);
+	if (data->texture.floor == -1)
+	{
+		ft_putstr_fd("Error: Invalid floor color detected\n", 2);
+		quit_early(data);
+	}
 	data->texture.ceiling = get_color(data->texture.ceiling_color);
-	printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
-	printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
+	if (data->texture.ceiling == -1)
+	{
+		ft_putstr_fd("Error: Invalid ceiling color detected\n", 2);
+		quit_early(data);
+	}
+	// printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
+	// printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);
 }
 
-// void	display_map(t_data *data, t_axes i)
-// {
-// 	if (data->map.map[i.y][i.x] == '1')
-
-// 	else if (data->map.map[i.y][i.x] == '0')
-// }
