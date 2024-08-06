@@ -155,7 +155,10 @@ int validate_map(char **map)
 		while (map[i][j])
 		{
 			if (!is_valid_map_char(map[i][j]))
+			{
+				ft_printf("%c\n");
 				return (0);
+			}
 			j++;
 		}
 		i++;
@@ -236,7 +239,6 @@ void init_map(t_data *data)
 {
 	char	*file_content;
 	char	**lines;
-	int		i;
 	int		map_start_index;
 
 	file_content = file_to_str(data);
@@ -245,15 +247,10 @@ void init_map(t_data *data)
 	map_start_index = parse_texture_paths(data, lines);
 	data->map.map = dup_tab(&lines[map_start_index]);
 	ft_free_tab(lines);
-	printf("NO = %s\nSO = %s\nWE = %s\nEA = %s\n", data->texture.no_texture.path, data->texture.so_texture.path, data->texture.we_texture.path, data->texture.ea_texture.path);
 	if (!validate_map(data->map.map))
 	{
 		ft_printf("Error: Invalid map character detected.\n");
-		i = -1;
-		while (lines[++i])
-			free(lines[i]);
-		free(lines);
-		quit(data);
+		quit_early(data);
 	}
 	data->map.map_dim = map_size(data);
 	locate_player(data);

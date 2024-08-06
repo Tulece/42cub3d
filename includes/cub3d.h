@@ -89,7 +89,7 @@ void error_exit(const char *message, t_data *data);
 void cleanup(t_data *data);
 
 
-
+int is_view_collision(t_data *data, double x, double y);
 
 t_axes intopos(int x, int y);
 void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img);
@@ -101,6 +101,7 @@ int	hook_switch(int keycode, t_data *data);
 
 // exit.c
 int	quit(t_data *data);
+int	quit_early(t_data *data);
 int	cross_quit(t_data *data);
 
 double	degrad(double deg);

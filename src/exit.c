@@ -15,6 +15,23 @@ void free_map(char **map)
 	free(map);
 }
 
+int	quit_early(t_data *data)
+{
+	if (data->map.map)
+	{
+		free_map(data->map.map);
+	}
+	mlx_do_key_autorepeaton(data->mlx);
+	free(data->map.map_path);
+	if (data->mlx && data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+	if (data->mlx)
+		free(data->mlx);
+	exit(0);
+}
+
 int	quit(t_data *data)
 {
 	if (data->map.map)

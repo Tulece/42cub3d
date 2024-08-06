@@ -1,19 +1,19 @@
 #include "../includes/cub3d.h"
 
-// int is_collision(t_data *data, double x, double y)
-// {
-// 	int map_x;
-// 	int map_y;
+int is_view_collision(t_data *data, double x, double y)
+{
+	int map_x;
+	int map_y;
 
-// 	map_x = (int)(x);
-// 	map_y = (int)(y);
+	map_x = (int)(x);
+	map_y = (int)(y);
 
-// 	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
-// 		return 1; // Treat out-of-bounds as a collision
-// 	if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
-// 		return 1;
-// 	return (0);
-// }
+	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || map_y >= data->map.map_dim.y)
+		return 1; // Treat out-of-bounds as a collision
+	if (data->map.map[map_y][map_x] == '1' || data->map.map[map_y][map_x] == ' ')
+		return 1;
+	return (0);
+}
 
 #include <math.h>
 

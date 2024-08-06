@@ -140,7 +140,7 @@ void draw_view(t_data *data, t_img *img)
 		{
 			pos.x = (int)(data->player.x * TILE_SIZE + j * cos(angle));
 			pos.y = (int)(data->player.y * TILE_SIZE + j * sin(angle));
-			if (!is_collision(data, pos.x / TILE_SIZE, pos.y / TILE_SIZE))
+			if (!is_view_collision(data, pos.x / TILE_SIZE, pos.y / TILE_SIZE))
 			{
 				put_pixel_on_img_offset(data, pos, 0xFF0000, img);
 			}
