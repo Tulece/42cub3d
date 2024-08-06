@@ -10,7 +10,7 @@ int	get_file_size(t_data *data)
 	if (fd == -1)
 	{
 		ft_printf("An error occured while opening the map.\n");
-		quit(data);
+		quit_early(data);
 	}
 	size = 0;
 	while (read(fd, &c, 1) > 0)
@@ -195,8 +195,8 @@ void	locate_player(t_data *data)
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
 			{
-				data->player.x = j;
-				data->player.y = i;
+				data->player.x = j + 0.5;
+				data->player.y = i + 0.5;
 				set_deg_dir(data, map[i][j]);
 				map[i][j] = '0';
 			}
