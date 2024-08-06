@@ -5,7 +5,7 @@ void free_map(char **map)
 	int i;
 
 	if (!map || !*map)
-		return;
+		return ;
 	i = 0;
 	while (map[i])
 	{
@@ -22,7 +22,8 @@ int	quit_early(t_data *data)
 		free_map(data->map.map);
 	}
 	mlx_do_key_autorepeaton(data->mlx);
-	free(data->map.map_path);
+	if (data->map.map_path)
+		free(data->map.map_path);
 	if (data->mlx && data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)

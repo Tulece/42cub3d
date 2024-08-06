@@ -27,6 +27,7 @@ void	init_data(t_data *data)
 	data->player.plane_y = 0;
 	data->player.speed = 0.2;
 	data->player.pov_speed = 2.0;
+	data->map.map = NULL;
 }
 
 void	init_textures(t_data *data)

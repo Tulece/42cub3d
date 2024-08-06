@@ -132,7 +132,7 @@ int	parse_texture_paths(t_data *data, char **lines)
 		else
 		{
 			ft_printf("Error: Invalid line detected: %s\n", lines[i]);
-			quit(data);
+			quit_early(data);
 		}
 	}
 	return (i);
