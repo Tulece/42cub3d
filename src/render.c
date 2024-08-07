@@ -91,8 +91,7 @@ void	perform_dda(t_data *data, t_ray *ray)
 		(1 - ray->step_y) / 2) / ray->ray_dir_y;
 }
 
-
-void calculate_line_height_and_draw_positions(t_ray *ray, int screen_height)
+void	calculate_line_height_and_draw_positions(t_ray *ray, int screen_height)
 {
 	ray->line_height = (int)(screen_height / ray->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + screen_height / 2;
@@ -111,7 +110,6 @@ void	select_texture(t_data *data, t_ray *ray)
 			ray->texture = &data->texture.we_texture;
 		else
 			ray->texture = &data->texture.ea_texture;
-
 	}
 	else
 	{
@@ -146,7 +144,6 @@ void	calculate_line_and_texture(t_data *data, t_ray *ray)
 	calculate_wall_and_texture_x(data, ray);
 }
 
-
 void	draw_vertical_stripe(t_data *data, t_ray *ray, t_img *img, int x)
 {
 	int	y;
@@ -168,7 +165,7 @@ void	draw_vertical_stripe(t_data *data, t_ray *ray, t_img *img, int x)
 		put_pixel_on_img(data, intopos(x, y), data->texture.floor, img);
 }
 
-void perform_raycasting(t_data *data, t_img *img)
+void	perform_raycasting(t_data *data, t_img *img)
 {
 	t_ray	ray;
 	int		x;
@@ -216,5 +213,3 @@ int	render_frame(t_data *data)
 	mlx_destroy_image(data->mlx, img.img);
 	return (0);
 }
-
-

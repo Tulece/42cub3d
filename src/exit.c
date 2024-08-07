@@ -1,8 +1,8 @@
 #include "../includes/cub3d.h"
 
-void free_map(char **map)
+void	free_map(char **map)
 {
-	int i;
+	int	i;
 
 	if (!map || !*map)
 		return ;

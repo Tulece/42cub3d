@@ -99,9 +99,9 @@ t_axes	map_size(t_data *data)
 	return (size);
 }
 
-void display_map_in_terminal(t_data *data)
+void	display_map_in_terminal(t_data *data)
 {
-	int i;
+	int	i;
 
 	if (!data->map.map)
 	{
@@ -119,31 +119,19 @@ int	validate_texture_paths(t_data *data)
 
 	fd = open(data->texture.no_texture.path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr_fd("Error opening NO texture file", 2);
-		return (0);
-	}
+		return (ft_putstr_fd("Error opening NO texture file", 2), 0);
 	close(fd);
 	fd = open(data->texture.so_texture.path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr_fd("Error opening SO texture file", 2);
-		return (0);
-	}
+		return (ft_putstr_fd("Error opening SO texture file", 2), 0);
 	close(fd);
 	fd = open(data->texture.we_texture.path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr_fd("Error opening WE texture file", 2);
-		return (0);
-	}
+		return (ft_putstr_fd("Error opening WE texture file", 2), 0);
 	close(fd);
 	fd = open(data->texture.ea_texture.path, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr_fd("Error opening EA texture file", 2);
-		return (0);
-	}
+		return (ft_putstr_fd("Error opening EA texture file", 2), 0);
 	close(fd);
 	return (1);
 }
@@ -183,9 +171,10 @@ int	parse_texture_paths(t_data *data, char **lines)
 	return (i);
 }
 
-int is_valid_map_char(char c)
+int	is_valid_map_char(char c)
 {
-	if (!(c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' '))
+	if (!(c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' \
+	|| c == 'W' || c == ' '))
 	{
 		ft_putstr_fd("Error: Invalid map character detected.\n", 2);
 		return (0);
@@ -366,7 +355,6 @@ int	get_color(char *color_char)
 	ft_free_tab(colors);
 	return (color);
 }
-
 
 void	handle_missing_info(t_data *data, char **lines)
 {

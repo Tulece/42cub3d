@@ -19,7 +19,7 @@
 // 	return (0);
 // }
 
-int handle_keypress(int keycode, t_data *data)
+int	handle_keypress(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		quit(data);
@@ -61,4 +61,3 @@ int	handle_keyrelease(int keycode, t_data *data)
 		data->key_states[KEY_SHIFT_I] = 0;
 	return (0);
 }
-
