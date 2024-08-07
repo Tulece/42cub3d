@@ -27,11 +27,11 @@ void	draw_map(t_data *data, t_img *img)
 	t_axes	pos;
 	t_axes	p_pos;
 
-	pos.y = 0;
-	while (pos.y < MM_SIZE)
+	pos.y = -1;
+	while (++pos.y < MM_SIZE)
 	{
-		pos.x = 0;
-		while (pos.x < MM_SIZE)
+		pos.x = -1;
+		while (++pos.x < MM_SIZE)
 		{
 			p_pos.x = x_off(data) + pos.x;
 			p_pos.y = y_off(data) + pos.y;
@@ -47,9 +47,7 @@ void	draw_map(t_data *data, t_img *img)
 			}
 			else
 				draw_tile(data, pos, 0x555555, img);
-			pos.x++;
 		}
-		pos.y++;
 	}
 }
 
