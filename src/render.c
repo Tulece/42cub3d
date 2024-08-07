@@ -42,12 +42,14 @@ void	calculate_step_and_initial_side_dist(t_data *data, t_ray *ray)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (data->player.x - ray->map_x) * ray->delta_dist_x;
+		ray->side_dist_x = (data->player.x - ray->map_x) \
+		* ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - data->player.x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - data->player.x) \
+		* ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
@@ -57,7 +59,8 @@ void	calculate_step_and_initial_side_dist(t_data *data, t_ray *ray)
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - data->player.y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - data->player.y) \
+		* ray->delta_dist_y;
 	}
 }
 
@@ -133,7 +136,7 @@ void	calculate_wall_and_texture_x(t_data *data, t_ray *ray)
 		ray->tex_x = ray->texture->width - ray->tex_x - 1;
 }
 
-void calculate_line_and_texture(t_data *data, t_ray *ray)
+void	calculate_line_and_texture(t_data *data, t_ray *ray)
 {
 	int	screen_height;
 
@@ -157,11 +160,9 @@ void	draw_vertical_stripe(t_data *data, t_ray *ray, t_img *img, int x)
 		ray->color = get_texture_color(ray->texture, ray->tex_x, ray->tex_y);
 		put_pixel_on_img(data, intopos(x, y), ray->color, img);
 	}
-	// Draw ceiling
 	y = -1;
 	while (++y < ray->draw_start)
 		put_pixel_on_img(data, intopos(x, y), data->texture.ceiling, img);
-	// Draw floor
 	y = ray->draw_end - 1;
 	while (++y < 600)
 		put_pixel_on_img(data, intopos(x, y), data->texture.floor, img);
@@ -185,18 +186,18 @@ void perform_raycasting(t_data *data, t_img *img)
 
 void	calculate_infos(t_data *data)
 {
-		if (data->key_states[KEY_W_I])
-			update_player_position_2(data, 0, data->key_states[KEY_SHIFT_I]);
-		if (data->key_states[KEY_A_I])
-			update_player_position_2(data, 3, data->key_states[KEY_SHIFT_I]);
-		if (data->key_states[KEY_S_I])
-			update_player_position_2(data, 1, data->key_states[KEY_SHIFT_I]);
-		if (data->key_states[KEY_D_I])
-			update_player_position_2(data, 2, data->key_states[KEY_SHIFT_I]);
-		if (data->key_states[KEY_R_ARROW_I])
-			update_player_dir(data, 1);
-		if (data->key_states[KEY_L_ARROW_I])
-			update_player_dir(data, -1);
+	if (data->key_states[KEY_W_I])
+		update_player_position_2(data, 0, data->key_states[KEY_SHIFT_I]);
+	if (data->key_states[KEY_A_I])
+		update_player_position_2(data, 3, data->key_states[KEY_SHIFT_I]);
+	if (data->key_states[KEY_S_I])
+		update_player_position_2(data, 1, data->key_states[KEY_SHIFT_I]);
+	if (data->key_states[KEY_D_I])
+		update_player_position_2(data, 2, data->key_states[KEY_SHIFT_I]);
+	if (data->key_states[KEY_R_ARROW_I])
+		update_player_dir(data, 1);
+	if (data->key_states[KEY_L_ARROW_I])
+		update_player_dir(data, -1);
 }
 
 int	render_frame(t_data *data)
@@ -208,7 +209,6 @@ int	render_frame(t_data *data)
 	img.img = mlx_new_image(data->mlx, img.width, img.heigth);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, \
 	&img.line_length, &img.endian);
-	// mlx_clear_window(data->mlx, data->win);
 	calculate_infos(data);
 	perform_raycasting(data, &img);
 	render_mini_map(data, &img);

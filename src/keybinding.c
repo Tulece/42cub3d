@@ -43,22 +43,22 @@ int handle_keypress(int keycode, t_data *data)
 	return (0);
 }
 
-int handle_keyrelease(int keycode, t_data *data)
+int	handle_keyrelease(int keycode, t_data *data)
 {
-		if (keycode == KEY_W)
-			data->key_states[KEY_W_I] = 0;
-		else if (keycode == KEY_A)
-			data->key_states[KEY_A_I] = 0;
-		else if (keycode == KEY_S)
-			data->key_states[KEY_S_I] = 0;
-		else if (keycode == KEY_D)
-			data->key_states[KEY_D_I] = 0;
-		else if (keycode == KEY_R_ARROW)
-			data->key_states[KEY_R_ARROW_I] = 0;
-		else if (keycode == KEY_L_ARROW)
-			data->key_states[KEY_L_ARROW_I] = 0;
-		else if (keycode == KEY_SHIFT)
-			data->key_states[KEY_SHIFT_I] = 0;
+	if (keycode == KEY_W)
+		data->key_states[KEY_W_I] = 0;
+	else if (keycode == KEY_A)
+		data->key_states[KEY_A_I] = 0;
+	else if (keycode == KEY_S)
+		data->key_states[KEY_S_I] = 0;
+	else if (keycode == KEY_D)
+		data->key_states[KEY_D_I] = 0;
+	else if (keycode == KEY_R_ARROW)
+		data->key_states[KEY_R_ARROW_I] = 0;
+	else if (keycode == KEY_L_ARROW)
+		data->key_states[KEY_L_ARROW_I] = 0;
+	else if (keycode == KEY_SHIFT)
+		data->key_states[KEY_SHIFT_I] = 0;
 	return (0);
 }
 

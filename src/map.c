@@ -148,6 +148,14 @@ int	validate_texture_paths(t_data *data)
 	return (1);
 }
 
+void	handle_texture_error(t_data *data, char **lines)
+{
+	ft_putstr_fd("Error: Invalid line detected\n", 2);
+	ft_free_tab(lines);
+	free_text_paths(data);
+	quit_early(data);
+}
+
 int	parse_texture_paths(t_data *data, char **lines)
 {
 	int	i;
@@ -170,12 +178,7 @@ int	parse_texture_paths(t_data *data, char **lines)
 		else if (lines[i][0] >= '0' && lines[i][0] <= '9')
 			break ;
 		else
-		{
-			ft_putstr_fd("Error: Invalid line detected\n", 2);
-			ft_free_tab(lines);
-			free_text_paths(data);
-			quit_early(data);
-		}
+			handle_texture_error(data, lines);
 	}
 	return (i);
 }
@@ -184,7 +187,7 @@ int is_valid_map_char(char c)
 {
 	if (!(c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' '))
 	{
-		ft_printf("Error: Invalid map character detected.\n");
+		ft_putstr_fd("Error: Invalid map character detected.\n", 2);
 		return (0);
 	}
 	return (1);
@@ -214,7 +217,9 @@ int	not_closed(t_data *data)
 		j = 0;
 		while (j < data->map.map_dim.x)
 		{
-			if (((i == 0 || i == data->map.map_dim.y - 1 || j == 0 || j == data->map.map_dim.x - 1) && data->map.map[i][j] == '0') || (data->map.map[i][j] == ' ' && neighbour_zero(data, i, j)))
+			if (((i == 0 || i == data->map.map_dim.y - 1 || j == 0 \
+			|| j == data->map.map_dim.x - 1) && data->map.map[i][j] == '0') \
+			|| (data->map.map[i][j] == ' ' && neighbour_zero(data, i, j)))
 			{
 				ft_putstr_fd("Error: Map not closed\n", 2);
 				return (1);
@@ -226,10 +231,10 @@ int	not_closed(t_data *data)
 	return (0);
 }
 
-int validate_map(t_data *data)
+int	validate_map(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (data->map.map[i])
@@ -264,9 +269,9 @@ void	set_deg_dir(t_data *data, char dir)
 
 void	locate_player(t_data *data)
 {
-	char **map;
-	int i;
-	int j;
+	char	**map;
+	int		i;
+	int		j;
 
 	map = data->map.map;
 	i = 0;
@@ -275,7 +280,8 @@ void	locate_player(t_data *data)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' || map[i][j] == 'W')
+			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' \
+			|| map[i][j] == 'W')
 			{
 				data->player.x = j + 0.5;
 				data->player.y = i + 0.5;
@@ -289,7 +295,7 @@ void	locate_player(t_data *data)
 	calculate_vectors(&data->player);
 }
 
-char **dup_tab(char **tab)
+char	**dup_tab(char **tab)
 {
 	char	**new_tab;
 	int		i;
@@ -329,14 +335,14 @@ int	str_is_digit(char *str)
 		}
 		str++;
 	}
-	return(0);
+	return (0);
 }
 
-int get_color(char *color_char)
+int	get_color(char *color_char)
 {
-	char    **colors;
-	int     color;
-	int     i;
+	char	**colors;
+	int		color;
+	int		i;
 
 	color = 0;
 	i = 0;
@@ -348,12 +354,13 @@ int get_color(char *color_char)
 	}
 	while (i < 3)
 	{
-		if (colors[i] == NULL || str_is_digit(colors[i]) || ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
+		if (colors[i] == NULL || str_is_digit(colors[i]) \
+		|| ft_atoi(colors[i]) > 255 || ft_atoi(colors[i]) < 0)
 		{
 			ft_free_tab(colors);
 			return (-1);
 		}
-		color += ft_atoi(colors[i]) <<  (3 - (i + 1)) * 8;
+		color += ft_atoi(colors[i]) << (3 - (i + 1)) * 8;
 		i++;
 	}
 	ft_free_tab(colors);
@@ -361,38 +368,47 @@ int get_color(char *color_char)
 }
 
 
-void init_map(t_data *data)
+void	handle_missing_info(t_data *data, char **lines)
 {
-	char	*file_content;
-	char	**lines;
-	int		map_start_index;
-
-	file_content = file_to_str(data);
-	lines = ft_split(file_content, '\n');
-	free(file_content);
-	map_start_index = parse_texture_paths(data, lines);
-	if (!data->texture.ea_texture.path || !data->texture.we_texture.path || !data->texture.no_texture.path || !data->texture.so_texture.path || !data->texture.floor_color || !data->texture.ceiling_color)
+	if (!data->texture.ea_texture.path || !data->texture.we_texture.path
+		|| !data->texture.no_texture.path || !data->texture.so_texture.path
+		|| !data->texture.floor_color || !data->texture.ceiling_color)
 	{
 		ft_printf("Error: Missing map information\n");
 		ft_free_tab(lines);
 		free_text_paths(data);
 		quit_early(data);
 	}
+}
+
+void	handle_invalid_paths(t_data *data, char **lines)
+{
 	if (!validate_texture_paths(data))
 	{
 		ft_free_tab(lines);
 		free_text_paths(data);
 		quit_early(data);
 	}
+}
+
+void	initialize_map(t_data *data, char **lines, int map_start_index)
+{
 	data->map.map = dup_tab(&lines[map_start_index]);
 	ft_free_tab(lines);
 	data->map.map_dim = map_size(data);
+}
+
+void	handle_invalid_map(t_data *data)
+{
 	if (!validate_map(data))
 	{
 		free_text_paths(data);
 		quit_early(data);
 	}
-	locate_player(data);
+}
+
+void	set_colors(t_data *data)
+{
 	if (data->texture.floor_color)
 		data->texture.floor = get_color(data->texture.floor_color);
 	if (data->texture.ceiling_color)
@@ -403,7 +419,22 @@ void init_map(t_data *data)
 		free_text_paths(data);
 		quit_early(data);
 	}
-	// printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
-	// printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
-	//display_map_in_terminal(data);
+}
+
+void	init_map(t_data *data)
+{
+	char	*file_content;
+	char	**lines;
+	int		map_start_index;
+
+	file_content = file_to_str(data);
+	lines = ft_split(file_content, '\n');
+	free(file_content);
+	map_start_index = parse_texture_paths(data, lines);
+	handle_missing_info(data, lines);
+	handle_invalid_paths(data, lines);
+	initialize_map(data, lines, map_start_index);
+	handle_invalid_map(data);
+	locate_player(data);
+	set_colors(data);
 }

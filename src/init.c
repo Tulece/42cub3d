@@ -36,25 +36,43 @@ void	init_data(t_data *data)
 	data->texture.floor_color = NULL;
 }
 
-void	init_textures(t_data *data)
+void	init_single_texture(t_data *data, t_img *texture)
 {
 	int	width;
 	int	height;
 
-	data->texture.no_texture.img = mlx_xpm_file_to_image(data->mlx, data->texture.no_texture.path, &width, &height);
-	data->texture.no_texture.addr = mlx_get_data_addr(data->texture.no_texture.img, &data->texture.no_texture.bpp, &data->texture.no_texture.line_length, &data->texture.no_texture.endian);
-	data->texture.no_texture.width = width;
-	data->texture.no_texture.heigth = height;
-	data->texture.so_texture.img = mlx_xpm_file_to_image(data->mlx, data->texture.so_texture.path, &width, &height);
-	data->texture.so_texture.addr = mlx_get_data_addr(data->texture.so_texture.img, &data->texture.so_texture.bpp, &data->texture.so_texture.line_length, &data->texture.so_texture.endian);
-	data->texture.so_texture.width = width;
-	data->texture.so_texture.heigth = height;
-	data->texture.we_texture.img = mlx_xpm_file_to_image(data->mlx, data->texture.we_texture.path, &width, &height);
-	data->texture.we_texture.addr = mlx_get_data_addr(data->texture.we_texture.img, &data->texture.we_texture.bpp, &data->texture.we_texture.line_length, &data->texture.we_texture.endian);
-	data->texture.we_texture.width = width;
-	data->texture.we_texture.heigth = height;
-	data->texture.ea_texture.img = mlx_xpm_file_to_image(data->mlx, data->texture.ea_texture.path, &width, &height);
-	data->texture.ea_texture.addr = mlx_get_data_addr(data->texture.ea_texture.img, &data->texture.ea_texture.bpp, &data->texture.ea_texture.line_length, &data->texture.ea_texture.endian);
-	data->texture.ea_texture.width = width;
-	data->texture.ea_texture.heigth = height;
+	texture->img = mlx_xpm_file_to_image(data->mlx, texture->path, \
+	&width, &height);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, \
+	&texture->line_length, &texture->endian);
+	texture->width = width;
+	texture->heigth = height;
+}
+
+void	init_no_texture(t_data *data)
+{
+	init_single_texture(data, &data->texture.no_texture);
+}
+
+void	init_so_texture(t_data *data)
+{
+	init_single_texture(data, &data->texture.so_texture);
+}
+
+void	init_we_texture(t_data *data)
+{
+	init_single_texture(data, &data->texture.we_texture);
+}
+
+void	init_ea_texture(t_data *data)
+{
+	init_single_texture(data, &data->texture.ea_texture);
+}
+
+void	init_textures(t_data *data)
+{
+	init_no_texture(data);
+	init_so_texture(data);
+	init_we_texture(data);
+	init_ea_texture(data);
 }

@@ -7,8 +7,6 @@ int	is_walkable(char **map, int x, int y)
 
 void	error_exit(const char *message, t_data *data)
 {
-	// if (data)
-		// cleanup(data);
 	fprintf(stderr, "Error\n%s\n", message);
 	exit(1);
 }
