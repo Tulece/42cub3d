@@ -48,30 +48,21 @@ void	init_single_texture(t_data *data, t_img *texture)
 	texture->heigth = height;
 }
 
-void	init_no_texture(t_data *data)
+void	initialize_ray(t_data *data, t_ray *ray, int x)
 {
-	init_single_texture(data, &data->texture.no_texture);
+	ray->camera_x = 2 * x / 800.0 - 1;
+	ray->ray_dir_x = data->player.dir_x + data->player.plane_x * ray->camera_x;
+	ray->ray_dir_y = data->player.dir_y + data->player.plane_y * ray->camera_x;
+	ray->map_x = (int)data->player.x;
+	ray->map_y = (int)data->player.y;
+	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	ray->hit = 0;
 }
 
-void	init_so_texture(t_data *data)
+void	initialize_map(t_data *data, char **lines, int map_start_index)
 {
-	init_single_texture(data, &data->texture.so_texture);
-}
-
-void	init_we_texture(t_data *data)
-{
-	init_single_texture(data, &data->texture.we_texture);
-}
-
-void	init_ea_texture(t_data *data)
-{
-	init_single_texture(data, &data->texture.ea_texture);
-}
-
-void	init_textures(t_data *data)
-{
-	init_no_texture(data);
-	init_so_texture(data);
-	init_we_texture(data);
-	init_ea_texture(data);
+	data->map.map = dup_tab(&lines[map_start_index]);
+	ft_free_tab(lines);
+	data->map.map_dim = map_size(data);
 }
