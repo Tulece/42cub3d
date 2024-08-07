@@ -16,9 +16,9 @@ void	draw_tile(t_data *data, t_axes pos, int color, t_img *img)
 			pix_pos.x = (pos.x * TILE_SIZE) + j;
 			pix_pos.y = (pos.y * TILE_SIZE) + i;
 			put_pixel_on_img(data, pix_pos, color, img);
-			i++;
+			j++;
 		}
-		j++;
+		i++;
 	}
 }
 
@@ -27,9 +27,10 @@ void	draw_map(t_data *data, t_img *img)
 	t_axes	pos;
 	t_axes	p_pos;
 
-	pos.y = -1;
-	while (++pos.y < MM_SIZE)
+	pos.y = 0;
+	while (pos.y < MM_SIZE)
 	{
+		pos.x = 0;
 		while (pos.x < MM_SIZE)
 		{
 			p_pos.x = x_off(data) + pos.x;
@@ -48,6 +49,7 @@ void	draw_map(t_data *data, t_img *img)
 				draw_tile(data, pos, 0x555555, img);
 			pos.x++;
 		}
+		pos.y++;
 	}
 }
 
@@ -111,10 +113,10 @@ void	draw_image_in_image(t_img *src, t_img *dst, t_axes pos)
 	int	pixel_src;
 	int	pixel_dst;
 
-	x = 0;
 	y = 0;
 	while (y < src->heigth)
 	{
+		x = 0;
 		while (x < src->width)
 		{
 			pixel_src = y * src->line_length + x * (src->bpp / 8);
