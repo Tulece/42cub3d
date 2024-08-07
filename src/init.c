@@ -28,6 +28,12 @@ void	init_data(t_data *data)
 	data->player.speed = 0.1;
 	data->player.pov_speed = 3.0;
 	data->map.map = NULL;
+	data->texture.no_texture.path = NULL;
+	data->texture.so_texture.path = NULL;
+	data->texture.ea_texture.path = NULL;
+	data->texture.we_texture.path = NULL;
+	data->texture.ceiling_color = NULL;
+	data->texture.floor_color = NULL;
 }
 
 void	init_textures(t_data *data)
