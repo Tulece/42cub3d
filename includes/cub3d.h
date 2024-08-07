@@ -103,6 +103,7 @@ int	hook_switch(int keycode, t_data *data);
 
 // exit.c
 int	quit(t_data *data);
+void	free_text_paths(t_data *data);
 int	quit_early(t_data *data);
 int	cross_quit(t_data *data);
 

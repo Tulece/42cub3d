@@ -33,6 +33,16 @@ int	quit_early(t_data *data)
 	exit(0);
 }
 
+void	free_text_paths(t_data *data)
+{
+	free(data->texture.ea_texture.path);
+	free(data->texture.no_texture.path);
+	free(data->texture.so_texture.path);
+	free(data->texture.we_texture.path);
+	free(data->texture.ceiling_color);
+	free(data->texture.floor_color);
+}
+
 int	quit(t_data *data)
 {
 	if (data->map.map)
@@ -41,13 +51,7 @@ int	quit(t_data *data)
 	}
 	mlx_do_key_autorepeaton(data->mlx);
 	free(data->map.map_path);
-	free(data->texture.ea_texture.path);
-	free(data->texture.no_texture.path);
-	free(data->texture.so_texture.path);
-	free(data->texture.we_texture.path);
-	//Attention si la structure change pour floor et ceiling
-	free(data->texture.ceiling_color);
-	free(data->texture.floor_color);
+	free_text_paths(data);
 	mlx_destroy_image(data->mlx, data->texture.ea_texture.img);
 	mlx_destroy_image(data->mlx, data->texture.no_texture.img);
 	mlx_destroy_image(data->mlx, data->texture.so_texture.img);

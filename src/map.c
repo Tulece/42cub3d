@@ -316,10 +316,13 @@ void init_map(t_data *data)
 	lines = ft_split(file_content, '\n');
 	free(file_content);
 	map_start_index = parse_texture_paths(data, lines);
-	if (!validate_texture_paths(data))
-		quit_early(data);
-	data->map.map = dup_tab(&lines[map_start_index]);
 	ft_free_tab(lines);
+	if (!validate_texture_paths(data))
+	{
+		free_text_paths(data);
+		quit_early(data);
+	}
+	data->map.map = dup_tab(&lines[map_start_index]);
 	if (!validate_map(data->map.map))
 	{
 		ft_printf("Error: Invalid map character detected.\n");
