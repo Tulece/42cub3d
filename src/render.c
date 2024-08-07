@@ -126,7 +126,6 @@ void	calculate_wall_and_texture_x(t_data *data, t_ray *ray)
 	else
 		ray->wall_x = data->player.x + ray->perp_wall_dist * ray->ray_dir_x;
 	ray->wall_x -= floor(ray->wall_x);
-
 	ray->tex_x = (int)(ray->wall_x * (double)ray->texture->width);
 	if (ray->side == 0 && ray->ray_dir_x > 0)
 		ray->tex_x = ray->texture->width - ray->tex_x - 1;
