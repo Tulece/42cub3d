@@ -25,6 +25,7 @@
 # define KEY_D_I 3
 # define KEY_R_ARROW_I 4
 # define KEY_L_ARROW_I 5
+# define KEY_SHIFT_I 6
 
 # define KEY_ESC 65307
 # define PI 3.14159265358979323846
@@ -44,6 +45,7 @@
 # define KEY_DOWN 65364
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_SHIFT 65505
 # define MM_SIZE 12
 
 # define TILE_SIZE 8
@@ -60,7 +62,7 @@ int handle_keyrelease(int keycode, t_data *data);
 
 // img
 void	update_player_position(t_data *data, double delta_x, double delta_y);
-void    update_player_position_2(t_data *data, int dir);
+void    update_player_position_2(t_data *data, int dir, int run);
 void    update_player_dir(t_data *data, int dir);
 void	draw_player(t_data *data, t_img *img);
 void	draw_map(t_data *data, t_img *img);

@@ -90,7 +90,7 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	int			key_states[6];
+	int			key_states[7];
 	t_player	player;
 	t_texture	texture;
 	t_map		map;

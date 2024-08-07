@@ -37,6 +37,8 @@ int handle_keypress(int keycode, t_data *data)
 			data->key_states[KEY_R_ARROW_I] = 1;
 		else if (keycode == KEY_L_ARROW)
 			data->key_states[KEY_L_ARROW_I] = 1;
+		else if (keycode == KEY_SHIFT)
+			data->key_states[KEY_SHIFT_I] = 1;
 	}
 	return (0);
 }
@@ -55,6 +57,8 @@ int handle_keyrelease(int keycode, t_data *data)
 			data->key_states[KEY_R_ARROW_I] = 0;
 		else if (keycode == KEY_L_ARROW)
 			data->key_states[KEY_L_ARROW_I] = 0;
+		else if (keycode == KEY_SHIFT)
+			data->key_states[KEY_SHIFT_I] = 0;
 	return (0);
 }
 

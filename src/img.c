@@ -68,28 +68,27 @@ void update_player_position(t_data *data, double delta_x, double delta_y)
 		data->player.y = new_y;
 }
 
-void update_player_position_2(t_data *data, int dir)
+void update_player_position_2(t_data *data, int dir, int run)
 {
 	double d_x = 0.0;
 	double d_y = 0.0;
 
-	// Ajustez l'angle en fonction de la direction de déplacement
 	if (dir == 0) {
 		// Déplacement vers l'avant
-		d_x = data->player.speed * cos(degrad(data->player.deg_dir));
-		d_y = data->player.speed * sin(degrad(data->player.deg_dir));
+		d_x = (data->player.speed * (1 + run)) * cos(degrad(data->player.deg_dir));
+		d_y = (data->player.speed * (1 + run)) * sin(degrad(data->player.deg_dir));
 	} else if (dir == 1) {
 		// Déplacement vers l'arrière
-		d_x = -data->player.speed * cos(degrad(data->player.deg_dir));
-		d_y = -data->player.speed * sin(degrad(data->player.deg_dir));
+		d_x = (-data->player.speed * (1 + run)) * cos(degrad(data->player.deg_dir));
+		d_y = (-data->player.speed * (1 + run)) * sin(degrad(data->player.deg_dir));
 	} else if (dir == 2) {
 		// Déplacement vers la gauche
-		d_x = -data->player.speed * sin(degrad(data->player.deg_dir));
-		d_y = data->player.speed * cos(degrad(data->player.deg_dir));
+		d_x = (-data->player.speed * (1 + run)) * sin(degrad(data->player.deg_dir));
+		d_y = (data->player.speed * (1 + run)) * cos(degrad(data->player.deg_dir));
 	} else if (dir == 3) {
 		// Déplacement vers la droite
-		d_x = data->player.speed * sin(degrad(data->player.deg_dir));
-		d_y = -data->player.speed * cos(degrad(data->player.deg_dir));
+		d_x = (data->player.speed * (1 + run)) * sin(degrad(data->player.deg_dir));
+		d_y = (-data->player.speed * (1 + run)) * cos(degrad(data->player.deg_dir));
 	}
 
 	update_player_position(data, d_x, d_y);

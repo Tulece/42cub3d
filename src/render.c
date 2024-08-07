@@ -187,13 +187,13 @@ void perform_raycasting(t_data *data, t_img *img)
 void	calculate_infos(t_data *data)
 {
 		if (data->key_states[KEY_W_I])
-			update_player_position_2(data, 0);
+			update_player_position_2(data, 0, data->key_states[KEY_SHIFT_I]);
 		if (data->key_states[KEY_A_I])
-			update_player_position_2(data, 3);
+			update_player_position_2(data, 3, data->key_states[KEY_SHIFT_I]);
 		if (data->key_states[KEY_S_I])
-			update_player_position_2(data, 1);
+			update_player_position_2(data, 1, data->key_states[KEY_SHIFT_I]);
 		if (data->key_states[KEY_D_I])
-			update_player_position_2(data, 2);
+			update_player_position_2(data, 2, data->key_states[KEY_SHIFT_I]);
 		if (data->key_states[KEY_R_ARROW_I])
 			update_player_dir(data, 1);
 		if (data->key_states[KEY_L_ARROW_I])
