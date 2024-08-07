@@ -86,6 +86,7 @@ int	render_frame(t_data *data);
 // Utils
 int is_walkable(char **map, int x, int y);
 void error_exit(const char *message, t_data *data);
+void	ft_free_tab(char **tab);
 
 // Cleanup
 void cleanup(t_data *data);

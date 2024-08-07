@@ -35,12 +35,18 @@ int	quit_early(t_data *data)
 
 void	free_text_paths(t_data *data)
 {
-	free(data->texture.ea_texture.path);
-	free(data->texture.no_texture.path);
-	free(data->texture.so_texture.path);
-	free(data->texture.we_texture.path);
-	free(data->texture.ceiling_color);
-	free(data->texture.floor_color);
+	if (data->texture.ea_texture.path)
+		free(data->texture.ea_texture.path);
+	if (data->texture.no_texture.path)
+		free(data->texture.no_texture.path);
+	if (data->texture.so_texture.path)
+		free(data->texture.so_texture.path);
+	if (data->texture.we_texture.path)
+		free(data->texture.we_texture.path);
+	if (data->texture.ceiling_color)
+		free(data->texture.ceiling_color);
+	if (data->texture.floor_color)
+		free(data->texture.floor_color);
 }
 
 int	quit(t_data *data)
