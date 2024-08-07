@@ -109,5 +109,9 @@ int	quit_early(t_data *data);
 int	cross_quit(t_data *data);
 
 double	degrad(double deg);
+void	put_pixel_on_img_offset(t_data *data, t_axes pos, int color, t_img *img);
+int		x_off(t_data *data);
+int		y_off(t_data *data);
+void	draw_image_in_image(t_img *src, t_img *dst, t_axes pos);
 
 #endif
