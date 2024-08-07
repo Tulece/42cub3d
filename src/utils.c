@@ -11,6 +11,34 @@ void	error_exit(const char *message, t_data *data)
 	exit(1);
 }
 
+void	ft_free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+int	str_is_digit(char *str)
+{
+	while (*str)
+	{
+		if ((*str < '0' || *str > '9'))
+		{
+			return (1);
+		}
+		str++;
+	}
+	return (0);
+}
+
 void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img)
 {
 	int	pixel;
