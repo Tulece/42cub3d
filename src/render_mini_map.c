@@ -192,7 +192,7 @@ void draw_image_in_image(t_img *src, t_img *dst, t_axes pos)
             pixel_src = y * src->line_length + x * (src->bpp / 8);
             pixel_dst = (pos.y + y) * dst->line_length + (pos.x + x) * (dst->bpp / 8);
 
-            dst->addr[pixel_dst] = src->addr[pixel_src];       // Blue
+            dst->addr[pixel_dst] = src->addr[pixel_src];        // Blue
             dst->addr[pixel_dst + 1] = src->addr[pixel_src + 1]; // Green
             dst->addr[pixel_dst + 2] = src->addr[pixel_src + 2]; // Red
             dst->addr[pixel_dst + 3] = src->addr[pixel_src + 3]; // Alpha (if any)

@@ -196,7 +196,6 @@ int validate_map(char **map)
 		{
 			if (!is_valid_map_char(map[i][j]))
 			{
-				ft_printf("%c\n");
 				return (0);
 			}
 			j++;
@@ -327,24 +326,20 @@ void init_map(t_data *data)
 	if (!validate_map(data->map.map))
 	{
 		ft_printf("Error: Invalid map character detected.\n");
+		free_text_paths(data);
 		quit_early(data);
 	}
 	data->map.map_dim = map_size(data);
 	locate_player(data);
 	data->texture.floor = get_color(data->texture.floor_color);
-	if (data->texture.floor == -1)
-	{
-		ft_putstr_fd("Error: Invalid floor color detected\n", 2);
-		quit_early(data);
-	}
 	data->texture.ceiling = get_color(data->texture.ceiling_color);
-	if (data->texture.ceiling == -1)
+	if (data->texture.ceiling == -1 || data->texture.floor == -1)
 	{
-		ft_putstr_fd("Error: Invalid ceiling color detected\n", 2);
+		ft_putstr_fd("Error: Invalid color detected\n", 2);
+		free_text_paths(data);
 		quit_early(data);
 	}
 	// printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
 	// printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
 	display_map_in_terminal(data);
 }
-
