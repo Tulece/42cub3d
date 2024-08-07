@@ -180,21 +180,62 @@ int	parse_texture_paths(t_data *data, char **lines)
 
 int is_valid_map_char(char c)
 {
-	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ');
+	if (!(c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' '))
+	{
+		ft_printf("Error: Invalid map character detected.\n");
+		return (0);
+	}
+	return (1);
 }
 
-int validate_map(char **map)
+int	neighbour_zero(t_data *data, int i, int j)
+{
+	if (i > 0 && data->map.map[i - 1][j] == '0')
+		return (1);
+	if (i < data->map.map_dim.y - 1 && data->map.map[i + 1][j] == '0')
+		return (1);
+	if (j > 0 && data->map.map[i][j - 1] == '0')
+		return (1);
+	if (j < data->map.map_dim.x - 1 && data->map.map[i][j + 1] == '0')
+		return (1);
+	return (0);
+}
+
+int	not_closed(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->map.map_dim.y)
+	{
+		j = 0;
+		while (j < data->map.map_dim.x)
+		{
+			if (((i == 0 || i == data->map.map_dim.y - 1 || j == 0 || j == data->map.map_dim.x - 1) && data->map.map[i][j] == '0') || (data->map.map[i][j] == ' ' && neighbour_zero(data, i, j)))
+			{
+				ft_putstr_fd("Error: Map not closed\n", 2);
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int validate_map(t_data *data)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (map[i])
+	while (data->map.map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map.map[i][j])
 		{
-			if (!is_valid_map_char(map[i][j]))
+			if (!is_valid_map_char(data->map.map[i][j]) || not_closed(data))
 			{
 				return (0);
 			}
@@ -323,13 +364,12 @@ void init_map(t_data *data)
 	}
 	data->map.map = dup_tab(&lines[map_start_index]);
 	ft_free_tab(lines);
-	if (!validate_map(data->map.map))
+	data->map.map_dim = map_size(data);
+	if (!validate_map(data))
 	{
-		ft_printf("Error: Invalid map character detected.\n");
 		free_text_paths(data);
 		quit_early(data);
 	}
-	data->map.map_dim = map_size(data);
 	locate_player(data);
 	data->texture.floor = get_color(data->texture.floor_color);
 	data->texture.ceiling = get_color(data->texture.ceiling_color);
@@ -341,5 +381,5 @@ void init_map(t_data *data)
 	}
 	// printf("floor color = %s\nceiling color = %s\n", data->texture.floor_color, data->texture.ceiling_color);
 	// printf("map_dim.x = %d\nmap_dim.y = %d\n", data->map.map_dim.x, data->map.map_dim.y);
-	display_map_in_terminal(data);
+	//display_map_in_terminal(data);
 }
