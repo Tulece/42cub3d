@@ -120,7 +120,7 @@ int	validate_texture_paths(t_data *data)
 	fd = open(data->texture.no_texture.path, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error opening NO texture file");
+		ft_putstr_fd("Error opening NO texture file", 2);
 		return (0);
 	}
 	close(fd);
