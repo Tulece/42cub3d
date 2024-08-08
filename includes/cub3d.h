@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anporced <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/08 02:04:01 by anporced          #+#    #+#             */
+/*   Updated: 2024/08/08 02:08:40 by anporced         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -112,7 +124,6 @@ int		render_frame(t_data *data);
 
 // utils.c
 int		is_walkable(char **map, int x, int y);
-void	error_exit(const char *message, t_data *data);
 void	ft_free_tab(char **tab);
 int		str_is_digit(char *str);
 void	put_pixel_on_img(t_data *data, t_axes pos, int color, t_img *img);
