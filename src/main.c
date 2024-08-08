@@ -6,7 +6,7 @@
 /*   By: anporced <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 02:04:26 by anporced          #+#    #+#             */
-/*   Updated: 2024/08/08 02:04:27 by anporced         ###   ########.fr       */
+/*   Updated: 2024/08/08 02:08:17 by anporced         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		error_exit("Usage: ./cub3D <map.cub>", NULL);
+		ft_putstr_fd("Usage: ./cub3D <map.cub>", 2);
 	init_data(&data);
 	data.map.map_path = ft_strdup(argv[1]);
 	init_map(&data);

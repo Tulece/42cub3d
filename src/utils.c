@@ -6,7 +6,7 @@
 /*   By: anporced <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 02:05:11 by anporced          #+#    #+#             */
-/*   Updated: 2024/08/08 02:05:14 by anporced         ###   ########.fr       */
+/*   Updated: 2024/08/08 02:08:26 by anporced         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 int	is_walkable(char **map, int x, int y)
 {
 	return (map[y][x] == '0');
-}
-
-void	error_exit(const char *message, t_data *data)
-{
-	fprintf(stderr, "Error\n%s\n", message);
-	exit(1);
 }
 
 void	ft_free_tab(char **tab)

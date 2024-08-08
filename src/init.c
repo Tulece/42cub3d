@@ -6,7 +6,7 @@
 /*   By: anporced <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 02:04:20 by anporced          #+#    #+#             */
-/*   Updated: 2024/08/08 02:04:22 by anporced         ###   ########.fr       */
+/*   Updated: 2024/08/08 02:07:54 by anporced         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	init_data(t_data *data)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		error_exit("Failed to initialize MLX", data);
+		ft_putstr_fd("Failed to initialize MLX\n", 2);
 	data->win = mlx_new_window(data->mlx, 800, 600, "Cub3D");
 	if (!data->win)
-		error_exit("Failed to create window", data);
+		ft_putstr_fd("Failed to create window\n", 2);
 	ft_bzero(data->key_states, 7 * sizeof(int));
 	data->player.dir_x = -1;
 	data->player.dir_y = 0;
