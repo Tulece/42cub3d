@@ -19,7 +19,6 @@ int	is_view_collision(t_data *data, double x, double y)
 
 	map_x = (int)(x);
 	map_y = (int)(y);
-
 	if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 \
 	|| map_y >= data->map.map_dim.y)
 		return (1);
@@ -29,24 +28,30 @@ int	is_view_collision(t_data *data, double x, double y)
 	return (0);
 }
 
+void	set_pos(t_axes *pos, int x, int y)
+{
+	pos->x = x;
+	pos->y = y;
+}
+
 int	is_collision(t_data *data, double x, double y)
 {
 	int		map_x;
 	int		map_y;
 	int		i;
-	double	margin = 0.2;
-	double	points_to_check[4][2] = {
-		{x - margin, y - margin},
-		{x + margin, y - margin},
-		{x - margin, y + margin},
-		{x + margin, y + margin}
-	};
+	double	margin;
+	t_axes	points_to_check[4];
 
+	margin = 0.2;
+	set_pos(&points_to_check[0], x - margin, y - margin);
+	set_pos(&points_to_check[1], x + margin, y - margin);
+	set_pos(&points_to_check[2], x - margin, y + margin);
+	set_pos(&points_to_check[3], x + margin, y + margin);
 	i = 0;
 	while (i < 4)
 	{
-		map_x = (int)(points_to_check[i][0]);
-		map_y = (int)(points_to_check[i][1]);
+		map_x = (int)(points_to_check[i].x);
+		map_y = (int)(points_to_check[i].y);
 		if (map_x < 0 || map_x >= data->map.map_dim.x || map_y < 0 || \
 		map_y >= data->map.map_dim.y)
 			return (1);
@@ -79,47 +84,4 @@ void	update_player_position(t_data *data, double delta_x, double delta_y)
 		data->player.x = new_x;
 	if (!is_collision(data, data->player.x, new_y))
 		data->player.y = new_y;
-}
-
-void	update_player_position_2(t_data *data, int dir, int run)
-{
-	double	d_x;
-	double	d_y;
-
-	d_x = 0.0;
-	d_y = 0.0;
-	if (dir == 0)
-	{
-		d_x = (data->player.speed * (1 + run)) \
-		* cos(degrad(data->player.deg_dir));
-		d_y = (data->player.speed * (1 + run)) \
-		* sin(degrad(data->player.deg_dir));
-	}
-	else if (dir == 1)
-	{
-		d_x = (-data->player.speed * (1 + run)) \
-		* cos(degrad(data->player.deg_dir));
-		d_y = (-data->player.speed * (1 + run)) \
-		* sin(degrad(data->player.deg_dir));
-	}
-	else if (dir == 2)
-	{
-		d_x = (-data->player.speed * (1 + run)) \
-		* sin(degrad(data->player.deg_dir));
-		d_y = (data->player.speed * (1 + run)) \
-		* cos(degrad(data->player.deg_dir));
-	}
-	else if (dir == 3)
-	{
-		d_x = (data->player.speed * (1 + run)) \
-		* sin(degrad(data->player.deg_dir));
-		d_y = (-data->player.speed * (1 + run)) \
-		* cos(degrad(data->player.deg_dir));
-	}
-	update_player_position(data, d_x, d_y);
-}
-
-double	degrad(double deg)
-{
-	return (((deg)) * (PI / 180.0));
 }
