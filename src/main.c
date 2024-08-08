@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anporced <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anporced <anporced@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 02:04:26 by anporced          #+#    #+#             */
-/*   Updated: 2024/08/08 02:08:17 by anporced         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:03:40 by anporced         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc != 2)
-		ft_putstr_fd("Usage: ./cub3D <map.cub>", 2);
+	if (argc != 2 || ft_strncmp(&(argv[1][ft_strlen(argv[1]) - 5]), ".cub", 4))
+		return (ft_putstr_fd("Usage: ./cub3D <map.cub>\n", 2), 1);
 	init_data(&data);
 	data.map.map_path = ft_strdup(argv[1]);
 	init_map(&data);
