@@ -70,7 +70,7 @@ void	draw_map(t_data *data, t_img *img);
 int		get_color(char *color_char);
 void	set_colors(t_data *data);
 void	set_deg_dir(t_data *data, char dir);
-void	locate_player(t_data *data);
+int		locate_player(t_data *data);
 
 // map_parser.c
 int		validate_texture_paths(t_data *data);

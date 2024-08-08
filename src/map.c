@@ -46,6 +46,11 @@ void	init_map(t_data *data)
 	handle_invalid_paths(data, lines);
 	initialize_map(data, lines, map_start_index);
 	handle_invalid_map(data);
-	locate_player(data);
+	if (locate_player(data))
+	{
+		ft_putstr_fd("Error: Wrong number of players\n", 2);
+		free_text_paths(data);
+		quit_early(data);
+	}
 	set_colors(data);
 }

@@ -57,30 +57,40 @@ void	set_deg_dir(t_data *data, char dir)
 	data->player.deg_dir = i;
 }
 
-void	locate_player(t_data *data)
+int	set_player(t_data *data, char **map, t_axes pos, int *num)
+{
+	if (*num)
+		return (1);
+	*num += 1;
+	data->player.x = pos.x + 0.5;
+	data->player.y = pos.y + 0.5;
+	set_deg_dir(data, map[pos.y][pos.x]);
+	map[pos.y][pos.x] = '0';
+	return (0);
+}
+
+int	locate_player(t_data *data)
 {
 	char	**map;
 	int		i;
 	int		j;
+	int		num;
 
+	num = 0;
 	map = data->map.map;
-	i = 0;
-	while (map[i])
+	i = -1;
+	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
-			if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' \
-			|| map[i][j] == 'W')
-			{
-				data->player.x = j + 0.5;
-				data->player.y = i + 0.5;
-				set_deg_dir(data, map[i][j]);
-				map[i][j] = '0';
-			}
-			j++;
+			if ((map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S' \
+			|| map[i][j] == 'W') && set_player(data, map, intopos(j, i), &num))
+				return (1);
 		}
-		i++;
 	}
+	if (!num)
+		return (1);
 	calculate_vectors(&data->player);
+	return (0);
 }

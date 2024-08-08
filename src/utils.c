@@ -30,7 +30,7 @@ int	str_is_digit(char *str)
 {
 	while (*str)
 	{
-		if ((*str < '0' || *str > '9'))
+		if (*str != ' ' && (*str < '0' || *str > '9'))
 		{
 			return (1);
 		}
