@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc != 2 || ft_strncmp(&(argv[1][ft_strlen(argv[1]) - 5]), ".cub", 4))
+	if (argc != 2 || !ft_strncmp(&(argv[1][ft_strlen(argv[1]) - 5]), ".cub", 4))
 		return (ft_putstr_fd("Usage: ./cub3D <map.cub>\n", 2), 1);
 	init_data(&data);
 	data.map.map_path = ft_strdup(argv[1]);
